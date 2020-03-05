@@ -21,6 +21,13 @@ namespace AOP.Console
             Utils.Print<int>(array);
             BubbleSort.Sort<int>(array);
             Utils.Print<int>(array);
+
+            array = new int[] {10, 17, 23, 3, 14, 57};
+
+            System.Console.WriteLine("Quick sort:");
+            Utils.Print<int>(array);
+            QuickSort.Sort<int>(array);
+            Utils.Print<int>(array);
         }
     }
 }
