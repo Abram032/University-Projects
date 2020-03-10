@@ -5,7 +5,7 @@ namespace AOP.Sorting.Algorithms
 {
     public static class InsertionSort
     {
-        public static void Sort<T>(IList<T> array) where T : IComparable<T>, IEquatable<T>
+        public static void Sort<T>(IList<T> array) where T : IComparable<T>, IEquatable<T>, IConvertible
         {
             for(int i = 1; i < array.Count; i++) 
             {

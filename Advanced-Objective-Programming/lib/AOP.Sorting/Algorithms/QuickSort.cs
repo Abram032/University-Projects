@@ -5,9 +5,9 @@ namespace AOP.Sorting.Algorithms
 {
     public static class QuickSort
     {
-        public static void Sort<T>(IList<T> array) where T : IComparable<T>, IEquatable<T> => QSort(array, 0, array.Count - 1);
+        public static void Sort<T>(IList<T> array) where T : IComparable<T>, IEquatable<T>, IConvertible => QSort(array, 0, array.Count - 1);
 
-        private static void QSort<T>(IList<T> array, int low, int high) where T : IComparable<T>, IEquatable<T>
+        private static void QSort<T>(IList<T> array, int low, int high) where T : IComparable<T>, IEquatable<T>, IConvertible
         {
             if(low < high)
             {
@@ -17,7 +17,7 @@ namespace AOP.Sorting.Algorithms
             }
         }
 
-        private static int Partiton<T>(IList<T> array, int low, int high) where T : IComparable<T>, IEquatable<T>
+        private static int Partiton<T>(IList<T> array, int low, int high) where T : IComparable<T>, IEquatable<T>, IConvertible
         {
             var pivot = array[high];
             int i = low - 1;

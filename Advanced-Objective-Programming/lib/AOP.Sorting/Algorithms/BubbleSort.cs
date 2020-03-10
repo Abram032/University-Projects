@@ -5,7 +5,7 @@ namespace AOP.Sorting.Algorithms
 {
     public static class BubbleSort
     {
-        public static void Sort<T>(IList<T> array) where T : IComparable<T>, IEquatable<T>
+        public static void Sort<T>(IList<T> array) where T : IComparable<T>, IEquatable<T>, IConvertible
         {
             for(int i = 0; i < array.Count - 1; i++) 
             {
