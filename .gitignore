@@ -14,3 +14,8 @@ Numerical-Methods/Task-1/out
 Artificial-Neural-Networks/Samples/Overengineerd-if/model
 Numerical-Methods/Task-1/output.txt
 Numerical-Methods/Task-2/out.exe
+
+Optimization-Methods/lib/OM.Models/obj/*
+Optimization-Methods/lib/OM.Models/bin/*
+Optimization-Methods/src/OM.Console/obj/*
+Optimization-Methods/src/OM.Models/bin/*
