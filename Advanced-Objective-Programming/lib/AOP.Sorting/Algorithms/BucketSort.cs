@@ -2,13 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace AOP.Sorting.Algorithms
 {
     public static class BucketSort
     {
-        public static void Sort<T>(IList<T> array) where T : IComparable<T>, IEquatable<T>, IConvertible
+        public static async Task Sort<T>(IList<T> array) where T : IComparable<T>, IEquatable<T>, IConvertible
         {
+            const int k = 10;
             var minValue = array.First();
             var maxValue = array.First();
 
@@ -20,7 +22,7 @@ namespace AOP.Sorting.Algorithms
                     minValue = value;
             }
 
-            var buckets = new List<T>[Convert.ToInt64((Subtract(maxValue, minValue))) + 1];
+            var buckets = new List<T>[k];
 
             for (int i = 0; i < buckets.Length; i++)
             {
@@ -29,53 +31,23 @@ namespace AOP.Sorting.Algorithms
 
             for (int i = 0; i < array.Count; i++)
             {
-                buckets[Convert.ToInt64(Subtract(array[i], minValue))].Add(array[i]);
+                buckets[((k - 1) * Convert.ToInt64(array[i]) / Convert.ToInt64(maxValue))].Add(array[i]);
             }
             
-            int k = 0;
-            for (int i = 0; i < buckets.Length; i++)
+            // foreach(var bucket in buckets)
+            // {
+            //     await InsertionSort.Sort(bucket);
+            // }
+
+            Parallel.ForEach(buckets, async (bucket) => await InsertionSort.Sort(bucket));
+
+            for(int i = 0, ai = 0; i < buckets.Length; i++)
             {
-                if (buckets[i].Count > 0)
+                for(int j = 0; j < buckets[i].Count; j++, ai++)
                 {
-                    for (int j = 0; j < buckets[i].Count; j++)
-                    {
-                        array[k] = buckets[i][j];
-                        k++;
-                    }
+                    array[ai] = buckets[i][j];
                 }
             }
-        }
-        
-        private static U Divide<T, U>(T a, U b) 
-            where T : IComparable<T>, IEquatable<T>
-            where U : IComparable<U>, IEquatable<U>
-        {
-            var paramA = Expression.Parameter(typeof(T), "a");
-            var paramB = Expression.Parameter(typeof(U), "b");
-            var body = Expression.Divide(paramA, paramB);
-            var func = Expression.Lambda<Func<T, U, U>>(body, paramA, paramB).Compile();
-            return func(a, b);
-        }
-
-        private static T Subtract<T>(T a, T b)
-            where T : IComparable<T>, IEquatable<T>
-        {
-            var paramA = Expression.Parameter(typeof(T), "a");
-            var paramB = Expression.Parameter(typeof(T), "b");
-            var body = Expression.Subtract(paramA, paramB);
-            var func = Expression.Lambda<Func<T, T, T>>(body, paramA, paramB).Compile();
-            return func(a, b);
-        }
-
-        private static U Add<T, U>(T a, U b)
-            where T : IComparable<T>, IEquatable<T>
-            where U : IComparable<U>, IEquatable<U>
-        {
-            var paramA = Expression.Parameter(typeof(T), "a");
-            var paramB = Expression.Parameter(typeof(U), "b");
-            var body = Expression.Add(paramA, paramB);
-            var func = Expression.Lambda<Func<T, U, U>>(body, paramA, paramB).Compile();
-            return func(a, b);
         }
     }
 }

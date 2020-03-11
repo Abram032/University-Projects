@@ -48,18 +48,12 @@ namespace AOP.Sorting.Algorithms
                 counts[Convert.ToInt64(value) - Convert.ToInt64(minValue)] += 1;
             }
 
-            var result = new List<T>();
-            for(int i = 0; i < counts.Length; i++)
+            for(int i = 0, ai = 0; i < counts.Length; i++)
             {
-                for(int j = 0; j < counts[i]; j++)
+                for(int j = 0; j < counts[i]; j++, ai++)
                 {
-                    result.Add((T)Convert.ChangeType(i + Convert.ToInt64(minValue), typeof(T)));
+                    array[ai] = (T)Convert.ChangeType(i + Convert.ToInt64(minValue), typeof(T));
                 }
-            }
-
-            for(int i = 0; i < array.Count; i++)
-            {
-                array[i] = result[i];
             }
         }
     }
