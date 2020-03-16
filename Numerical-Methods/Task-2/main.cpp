@@ -78,7 +78,7 @@ int main()
         }
         f_L_temp /= 2.0f;
         f_L /= 2.0f;
-        f_L_bits++;
+        f_L_bits--;
         //printf("%d\t%.20e\t%.20e\n", f_L_bits, f_L_temp, f_L);
     }
     f_L = f_L_temp;
@@ -96,7 +96,7 @@ int main()
         }
         d_L_temp /= 2.0f;
         d_L /= 2.0f;
-        d_L_bits++;
+        d_L_bits--;
         //printf("%d\t%.20e\t%.20e\n", f_L_bits, f_L_temp, f_L);
     }
     d_L = d_L_temp;
