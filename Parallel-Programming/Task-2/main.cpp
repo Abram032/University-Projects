@@ -41,6 +41,8 @@ int main()
     int threads = 100;
     int id = 100;
 
+    printf("Thread num: %d\n", omp_get_num_threads());
+
     #pragma omp parallel
     {
         threads = omp_get_num_threads();
