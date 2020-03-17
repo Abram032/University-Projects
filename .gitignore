@@ -1,5 +1,7 @@
 Advanced-Objective-Programming/lib/AOP.Sorting/bin/*
 Advanced-Objective-Programming/lib/AOP.Sorting/obj/*
+Advanced-Objective-Programming/lib/AOP.Sorting.Abstractions/bin/*
+Advanced-Objective-Programming/lib/AOP.Sorting.Abstractions/obj/*
 Advanced-Objective-Programming/src/AOP.Console/bin/*
 Advanced-Objective-Programming/src/AOP.Console/obj/*
 
@@ -14,3 +16,9 @@ Numerical-Methods/Task-1/output.txt
 Numerical-Methods/Task-2/out.exe
 Parallel-Programming/Task-2/.main.cpp.swp
 Parallel-Programming/Task-2/out.exe
+
+Optimization-Methods/lib/OM.Models/obj/*
+Optimization-Methods/lib/OM.Models/bin/*
+Optimization-Methods/src/OM.Console/obj/*
+Optimization-Methods/src/OM.Models/bin/*
+Numerical-Methods/Task-3/out.exe
