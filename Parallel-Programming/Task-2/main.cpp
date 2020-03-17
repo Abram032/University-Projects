@@ -45,7 +45,7 @@ int main()
     {
         threads = omp_get_num_threads();
         id = omp_get_thread_num();
-        std::cout << "Hello from thread: ", id << "out of ";
+        std::cout << "Hello from thread: " << id << "out of ";
         std::cout << threads << "\n";
     }
 
