@@ -20,6 +20,7 @@ Parallel-Programming/Task-2/out.exe
 Optimization-Methods/lib/OM.Models/obj/*
 Optimization-Methods/lib/OM.Models/bin/*
 Optimization-Methods/src/OM.Console/obj/*
-Optimization-Methods/src/OM.Models/bin/*
+Optimization-Methods/src/OM.Console/bin/*
 Numerical-Methods/Task-3/out.exe
 Parallel-Programming/Samples/CriticalSections/out.exe
+Optimization-Methods/src/OM.Console/output.json
