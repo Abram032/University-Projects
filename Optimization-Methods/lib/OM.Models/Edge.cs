@@ -17,6 +17,7 @@ namespace OM.Models
         //!To avoid loops and nested properties
         [JsonIgnore]
         public Vertex VertexA { get; set; }
+        //!To avoid loops and nested properties
         [JsonIgnore]
         public Vertex VertexB { get; set; }
 
@@ -35,7 +36,10 @@ namespace OM.Models
                 b.ConnectedEdges = new List<Edge>();
             }
             a.ConnectedEdges.Add(this);
-            b.ConnectedEdges.Add(this);
+
+            if(isDirected == false) {
+                b.ConnectedEdges.Add(this);
+            }
 
             if(a.NeighbouringVertices == null) {
                 a.NeighbouringVertices = new List<Vertex>();
@@ -64,5 +68,7 @@ namespace OM.Models
             VertexA = null;
             VertexB = null;
         }
+
+        public Vertex GetOpposingVertex(Vertex v) => (v == VertexA) ? VertexB : VertexA;
     }
 }
