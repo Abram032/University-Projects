@@ -6,7 +6,6 @@ namespace OM.Models
 {
     public class Vertex
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public int Weight { get; set; }
 

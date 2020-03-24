@@ -10,65 +10,15 @@ namespace OM.Console
     {
         static void Main(string[] args)
         {
-            var a = new Vertex 
-            {
-                Id = Guid.NewGuid(),
-                Name = "A",
-                Weight = 1
-            };
+            var graph1 = "../../resources/graphs/graph-1.json";
+            var graph2 = "../../resources/graphs/graph-2.json";
+            var graph3 = "../../resources/graphs/graph-3.json";
 
-            var b = new Vertex
-            {
-                Id = Guid.NewGuid(),
-                Name = "B",
-                Weight = 2
-            };
+            var json = File.ReadAllText(graph1);
 
-            var c = new Vertex
-            {
-                Id = Guid.NewGuid(),
-                Name = "C",
-                Weight = 3
-            };
+            var graph = Graph.Deserialize(json);
 
-            var e1 = new Edge
-            {
-                Id = Guid.NewGuid(),
-                Name = "E1",
-                Weight = 1
-            };
-
-            var e2 = new Edge
-            {
-                Id = Guid.NewGuid(),
-                Name = "E2",
-                Weight = 1
-            };
-
-            var e3 = new Edge
-            {
-                Id = Guid.NewGuid(),
-                Name = "E3",
-                Weight = 1
-            };
-
-            var graph = new Graph
-            {
-                Vertices = new List<Vertex> {a, b, c},
-                Edges = new List<Edge> {e1, e2, e3}
-            };
-
-            e1.ConnectVertices(a, b);
-            e2.ConnectVertices(b, c);
-            e3.ConnectVertices(c, a);
-
-            var json = Graph.Serialize(graph);
-            using(var sw = new StreamWriter("output.json"))
-            {
-                sw.Write(json);
-            }
-            var g = JsonConvert.DeserializeObject<Graph>(json);
-            var g2 = Graph.Deserialize(json);
+            
         }
     }
 }

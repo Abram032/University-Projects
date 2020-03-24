@@ -21,6 +21,8 @@ Optimization-Methods/lib/OM.Models/obj/*
 Optimization-Methods/lib/OM.Models/bin/*
 Optimization-Methods/src/OM.Console/obj/*
 Optimization-Methods/src/OM.Console/bin/*
+Optimization-Methods/lib/OM.Algorithms/obj/*
+Optimization-Methods/lib/OM.Algorithms/bin/*
 Numerical-Methods/Task-3/out.exe
 Parallel-Programming/Samples/CriticalSections/out.exe
 Optimization-Methods/src/OM.Console/output.json

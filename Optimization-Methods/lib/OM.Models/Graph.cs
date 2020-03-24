@@ -15,8 +15,8 @@ namespace OM.Models
             var graph = JsonConvert.DeserializeObject<Graph>(json);
             foreach(var edge in graph.Edges) 
             {
-                var a = graph.Vertices.FirstOrDefault(v => v.Id.Equals(edge.VertexA_Id));
-                var b = graph.Vertices.FirstOrDefault(v => v.Id.Equals(edge.VertexB_Id));
+                var a = graph.Vertices.FirstOrDefault(v => v.Name.Equals(edge.VertexA_Name));
+                var b = graph.Vertices.FirstOrDefault(v => v.Name.Equals(edge.VertexB_Name));
                 edge.ConnectVertices(a, b, edge.IsDirected);
             }
             return graph;

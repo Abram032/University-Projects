@@ -1,9 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <ProjectReference Include="..\..\lib\OM.Models\OM.Models.csproj"/>
+    <ProjectReference Include="..\..\lib\OM.Models\OM.Models.csproj" />
+    <ProjectReference Include="..\..\lib\OM.Algorithms\OM.Algorithms.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3"/>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
   <PropertyGroup>
     <OutputType>Exe</OutputType>
