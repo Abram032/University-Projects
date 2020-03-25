@@ -53,7 +53,6 @@ int main()
     std::cout << "Sign: " << sign << std::endl;
 
     //Exponent
-    //TODO: Fix exponent
     std::string exp_str = (byteToString(byte_array[3], 0, 6) + byteToString(byte_array[2], 7, 7));
     unsigned char exponent = static_cast<unsigned char>(std::stoi(exp_str, nullptr, 2));
     std::cout << "Exponent: "
