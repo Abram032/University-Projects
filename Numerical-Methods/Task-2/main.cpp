@@ -5,6 +5,20 @@
 
 int main()
 {
+    float f_min = 1.0f;
+    int f_min_bits = 0;
+    printf("Minimal float:\n");
+    while(f_min > 0.0f)
+    {
+        if(f_min/2 == 0.0f)
+        {
+            break;
+        }
+        f_min /= 2;
+        f_min_bits++;
+    }
+    printf("%d\t%.20e\n\n", f_min_bits, f_min);
+
     float f_eps = 1.0f;
     double d_eps = 1.0f;
 
@@ -18,9 +32,9 @@ int main()
         }
         f_eps /= 2.0f;
         f_bits++;
-        //printf("%d\t%.20e\t%.20f\n", f_bits, f_eps, 1.0f + f_eps);
+        printf("%d\t%.20e\t%.20e\n", f_bits, f_eps, 1.0f + f_eps);
     }
-    printf("Bits: %d\nEpsilon: %.20f\n\n", f_bits, f_eps);
+    printf("Bits: %d\nEpsilon: %.20e\n\n", f_bits, f_eps);
 
     printf("Double:\n");
     int d_bits = 0;
@@ -32,9 +46,9 @@ int main()
         }
         d_eps /= 2.0f;
         d_bits++;
-        //printf("%d\t%.20e\t%.20f\n", d_bits, d_eps, 1.0f + d_eps);
+        printf("%d\t%.20e\t%.20e\n", d_bits, d_eps, 1.0f + d_eps);
     }
-    printf("Bits: %d\nEpsilon: %.20f\n\n", d_bits, d_eps);
+    printf("Bits: %d\nEpsilon: %.20e\n\n", d_bits, d_eps);
 
     printf("Float Upper bound:\n");
     int f_U_bits = 0;
