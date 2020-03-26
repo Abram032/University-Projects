@@ -5,127 +5,6 @@
 #include<iomanip>
 #include<math.h>
 #include<string.h>
-//? Gowno copy pasta
-
-void getCofactor(double** A, double** temp, int p, int q, int n) 
-{ 
-    int i = 0, j = 0; 
-  
-    // Looping for each element of the matrix 
-    for (int row = 0; row < n; row++) 
-    { 
-        for (int col = 0; col < n; col++) 
-        { 
-            //  Copying into temporary matrix only those element 
-            //  which are not in given row and column 
-            if (row != p && col != q) 
-            { 
-                temp[i][j++] = A[row][col]; 
-  
-                // Row is filled, so increase row index and 
-                // reset col index 
-                if (j == n - 1) 
-                { 
-                    j = 0; 
-                    i++; 
-                } 
-            } 
-        } 
-    } 
-} 
-  
-/* Recursive function for finding determinant of matrix. 
-   n is current dimension of A[][]. */
-int determinant(double** A, int n) 
-{ 
-    int D = 0; // Initialize result 
-  
-    //  Base case : if matrix contains single element 
-    if (n == 1) 
-        return A[0][0]; 
-  
-    double** temp = new double*[n];
-    for(int i = 0; i < n; i++) {
-        temp[i] = new double[n];
-    }
-
-    int sign = 1;  // To store sign multiplier 
-  
-     // Iterate for each element of first row 
-    for (int f = 0; f < n; f++) 
-    { 
-        // Getting Cofactor of A[0][f] 
-        getCofactor(A, temp, 0, f, n); 
-        D += sign * A[0][f] * determinant(temp, n - 1); 
-  
-        // terms are to be added with alternate sign 
-        sign = -sign; 
-    } 
-  
-    return D; 
-} 
-  
-// Function to get adjoint of A[N][N] in adj[N][N]. 
-void adjoint(double** A, double** adj, int n) 
-{ 
-    if (n == 1) 
-    { 
-        adj[0][0] = 1; 
-        return; 
-    } 
-  
-    // temp is used to store cofactors of A[][] 
-    double sign = 1;
-    double** temp = new double*[n];
-    for(int i = 0; i < n; i++) {
-        temp[i] = new double[n];
-    }
-  
-    for (int i=0; i<n; i++) 
-    { 
-        for (int j=0; j<n; j++) 
-        { 
-            // Get cofactor of A[i][j] 
-            getCofactor(A, temp, i, j, n); 
-  
-            // sign of adj[j][i] positive if sum of row 
-            // and column indexes is even. 
-            sign = ((i+j)%2==0)? 1: -1; 
-  
-            // Interchanging rows and columns to get the 
-            // transpose of the cofactor matrix 
-            adj[j][i] = (sign)*(determinant(temp, n-1)); 
-        } 
-    } 
-} 
-  
-// Function to calculate and store inverse, returns false if 
-// matrix is singular 
-bool inverse(double** A, double** inverse, int n) 
-{
-    // Find determinant of A[][] 
-    int det = determinant(A, n); 
-    if (det == 0) 
-    { 
-        return false; 
-    } 
-  
-    // Find adjoint 
-    double** adj = new double*[n];
-    for(int i = 0; i < n; i++) {
-        adj[i] = new double[n];
-    }
-    adjoint(A, adj, n); 
-  
-    // Find Inverse using formula "inverse(A) = adj(A)/det(A)" 
-    for (int i=0; i<n; i++) 
-        for (int j=0; j<n; j++) 
-            inverse[i][j] = adj[i][j]/double(det); 
-  
-    return true; 
-} 
-
-//? koniec gonwo copy pasty
 
 void PrintMatrix(double** matrix, int n, int m, std::string name = "")
 {
@@ -176,6 +55,21 @@ void SwapColumn(double** matrix, int col1, int col2, int n)
         matrix[i][col1] = matrix[i][col2];
         matrix[i][col2] = temp;
     }
+}
+
+double** Transpose(double** matrix, int n)
+{
+    double** result = new double* [n];
+    for(int i = 0; i < n; i++) {
+        result[i] = new double[n];
+    }
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            result[i][j] = matrix[j][i];
+        }  
+    }
+    return result;
 }
 
 int main()
@@ -256,7 +150,7 @@ int main()
     std::cout << "Target row to swap with: ";
     std::cin >> row2;
     SwapRow(A, 1, 2, n);
-    PrintMatrix(A, n, n, "A' (Swapped row)");
+    PrintMatrix(A, n, n, "A (Swapped row)");
 
     L = new double* [n];
     U = new double* [n];
@@ -295,10 +189,14 @@ int main()
                 j_max = j;
             }
         }
-        //Swapping columns
-        SwapColumn(A, k, j_max, n);
-        SwapColumn(U, k, j_max, n);
-        SwapColumn(P, k, j_max, n);
+        if(k != j_max)
+        {
+            //Swapping columns
+            SwapColumn(A, k, j_max, n);
+            SwapColumn(U, k, j_max, n);
+            SwapColumn(P, k, j_max, n);
+        }
+        
 
         //Columns for L
         for(int i = k; i < n; i++) {
@@ -313,32 +211,14 @@ int main()
     }
 
     PrintMatrix(L, n, n, "L");
-    PrintMatrix(U, n, n, "U'");
+    PrintMatrix(U, n, n, "U");
     PrintMatrix(P, n, n, "P");
 
     LU = Multiply(L, U, n);
-    PrintMatrix(LU, n, n, "A = LU'");
-    // double** LUP = Multiply(LU, P, n);
-    // PrintMatrix(LUP, n, n, "A = LU'P");
-
-    double** UP = Multiply(U, P, n);
-    PrintMatrix(UP, n, n, "U (?)");
-    double** LUP = Multiply(L, UP, n);
-    PrintMatrix(LUP, n, n, "A = LUP (?)");
-
-    double** inverse_P = new double* [n];
-    for(int i = 0; i < n; i++) {
-        inverse_P[i] = new double[n];
-    }
-    inverse(P, inverse_P, n);
-    PrintMatrix(P, n, n, "P^(-1) (?)");
-
-    double** real_U = Multiply(U, inverse_P, n);
-    PrintMatrix(real_U, n, n, "U (?)");
-
-    LUP = Multiply(L, real_U, n);
-    PrintMatrix(LU, n, n, "A = LUP (?)");
-
+    //Transposing P
+    P = Transpose(P, n);
+    double** LUP = Multiply(LU, P, n);
+    PrintMatrix(LUP, n, n, "A = LUP");
     //Release resources
     for(int i = 0; i < n; i++) {
         delete[] A[i];
@@ -346,12 +226,14 @@ int main()
         delete[] U[i];
         delete[] P[i];
         delete[] LU[i];
+        delete[] LUP[i];
     }
     delete[] A;
     delete[] L;
     delete[] U;
     delete[] P;
     delete[] LU;
+    delete[] LUP;
 
     return 0;
 }
