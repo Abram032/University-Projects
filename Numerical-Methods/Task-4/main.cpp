@@ -13,7 +13,7 @@ void PrintMatrix(double** matrix, int n, int m, std::string name = "")
     {
         for(int j = 0; j < m; j++)
         {
-            printf("%.2f ", matrix[i][j]);
+            printf("%.8e ", matrix[i][j]);
         }
         printf("\n");
     }
@@ -144,13 +144,13 @@ int main()
     
     //! PART 2 - LU factorization with partial pivoting
     //Swapping one of the rows
-    int row1, row2;
-    std::cout << "Which row to swap: ";
-    std::cin >> row1;
-    std::cout << "Target row to swap with: ";
-    std::cin >> row2;
-    SwapRow(A, 1, 2, n);
-    PrintMatrix(A, n, n, "A (Swapped row)");
+    // int row1, row2;
+    // std::cout << "Which row to swap: ";
+    // std::cin >> row1;
+    // std::cout << "Target row to swap with: ";
+    // std::cin >> row2;
+    // SwapRow(A, 1, 2, n);
+    PrintMatrix(A, n, n, "A");
 
     L = new double* [n];
     U = new double* [n];
