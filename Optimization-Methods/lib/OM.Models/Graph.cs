@@ -19,6 +19,12 @@ namespace OM.Models
                 var b = graph.Vertices.FirstOrDefault(v => v.Name.Equals(edge.VertexB_Name));
                 edge.ConnectVertices(a, b, edge.IsDirected);
             }
+            foreach(var vertex in graph.Vertices)
+            {
+                vertex.Color = Color.None;
+                vertex.IsVisited = false;
+                vertex.IsMatched = false;
+            }
             return graph;
         }
 

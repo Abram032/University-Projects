@@ -1,0 +1,235 @@
+{
+    "Vertices" : [
+        {
+            "Name": "0",
+            "Weight": 1
+        },
+        {
+            "Name": "1",
+            "Weight": 1
+        },
+        {
+            "Name": "2",
+            "Weight": 1
+        },
+        {
+            "Name": "3",
+            "Weight": 1
+        },
+        {
+            "Name": "4",
+            "Weight": 1
+        },
+        {
+            "Name": "5",
+            "Weight": 1
+        },
+        {
+            "Name": "6",
+            "Weight": 1
+        },
+        {
+            "Name": "7",
+            "Weight": 1
+        },
+        {
+            "Name": "8",
+            "Weight": 1
+        },
+        {
+            "Name": "9",
+            "Weight": 1
+        },
+        {
+            "Name": "10",
+            "Weight": 1
+        },
+        {
+            "Name": "11",
+            "Weight": 1
+        },
+        {
+            "Name": "12",
+            "Weight": 1
+        },
+        {
+            "Name": "13",
+            "Weight": 1
+        },
+        {
+            "Name": "14",
+            "Weight": 1
+        },
+        {
+            "Name": "15",
+            "Weight": 1
+        },
+        {
+            "Name": "16",
+            "Weight": 1
+        }
+    ],
+    "Edges" : [
+        {
+            "Name": "0-2",
+            "Weight": 1,
+            "IsDirected": false,
+            "VertexA_Name": "0",
+            "VertexB_Name": "2"
+        },
+        {
+            "Name": "0-3",
+            "Weight": 1,
+            "IsDirected": false,
+            "VertexA_Name": "0",
+            "VertexB_Name": "3"
+        },
+        {
+            "Name": "1-2",
+            "Weight": 1,
+            "IsDirected": false,
+            "VertexA_Name": "1",
+            "VertexB_Name": "2"
+        },
+        {
+            "Name": "1-14",
+            "Weight": 1,
+            "IsDirected": false,
+            "VertexA_Name": "1",
+            "VertexB_Name": "14"
+        },
+        {
+            "Name": "2-6",
+            "Weight": 1,
+            "IsDirected": false,
+            "VertexA_Name": "2",
+            "VertexB_Name": "6"
+        },
+        {
+            "Name": "3-6",
+            "Weight": 1,
+            "IsDirected": false,
+            "VertexA_Name": "3",
+            "VertexB_Name": "6"
+        },
+        {
+            "Name": "3-4",
+            "Weight": 1,
+            "IsDirected": false,
+            "VertexA_Name": "3",
+            "VertexB_Name": "4"
+        },
+        {
+            "Name": "3-13",
+            "Weight": 1,
+            "IsDirected": false,
+            "VertexA_Name": "3",
+            "VertexB_Name": "13"
+        },
+        {
+            "Name": "4-7",
+            "Weight": 1,
+            "IsDirected": false,
+            "VertexA_Name": "4",
+            "VertexB_Name": "7"
+        },
+        {
+            "Name": "4-12",
+            "Weight": 1,
+            "IsDirected": false,
+            "VertexA_Name": "4",
+            "VertexB_Name": "12"
+        },
+        {
+            "Name": "5-6",
+            "Weight": 1,
+            "IsDirected": false,
+            "VertexA_Name": "5",
+            "VertexB_Name": "6"
+        },
+        {
+            "Name": "5-10",
+            "Weight": 1,
+            "IsDirected": false,
+            "VertexA_Name": "5",
+            "VertexB_Name": "10"
+        },
+        {
+            "Name": "5-9",
+            "Weight": 1,
+            "IsDirected": false,
+            "VertexA_Name": "5",
+            "VertexB_Name": "9"
+        },
+        {
+            "Name": "6-8",
+            "Weight": 1,
+            "IsDirected": false,
+            "VertexA_Name": "6",
+            "VertexB_Name": "8"
+        },
+        {
+            "Name": "6-7",
+            "Weight": 1,
+            "IsDirected": false,
+            "VertexA_Name": "6",
+            "VertexB_Name": "7"
+        },
+        {
+            "Name": "6-12",
+            "Weight": 1,
+            "IsDirected": false,
+            "VertexA_Name": "6",
+            "VertexB_Name": "12"
+        },
+        {
+            "Name": "7-13",
+            "Weight": 1,
+            "IsDirected": false,
+            "VertexA_Name": "7",
+            "VertexB_Name": "13"
+        },
+        {
+            "Name": "8-9",
+            "Weight": 1,
+            "IsDirected": false,
+            "VertexA_Name": "8",
+            "VertexB_Name": "9"
+        },
+        {
+            "Name": "10-14",
+            "Weight": 1,
+            "IsDirected": false,
+            "VertexA_Name": "10",
+            "VertexB_Name": "14"
+        },
+        {
+            "Name": "10-15",
+            "Weight": 1,
+            "IsDirected": false,
+            "VertexA_Name": "10",
+            "VertexB_Name": "15"
+        },
+        {
+            "Name": "10-11",
+            "Weight": 1,
+            "IsDirected": false,
+            "VertexA_Name": "10",
+            "VertexB_Name": "11"
+        },
+        {
+            "Name": "11-16",
+            "Weight": 1,
+            "IsDirected": false,
+            "VertexA_Name": "11",
+            "VertexB_Name": "16"
+        },
+        {
+            "Name": "12-16",
+            "Weight": 1,
+            "IsDirected": false,
+            "VertexA_Name": "12",
+            "VertexB_Name": "16"
+        }
+    ]
+}

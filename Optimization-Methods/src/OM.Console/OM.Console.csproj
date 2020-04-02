@@ -2,6 +2,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\lib\OM.Models\OM.Models.csproj" />
     <ProjectReference Include="..\..\lib\OM.Algorithms\OM.Algorithms.csproj" />
+    <ProjectReference Include="..\..\lib\OM.Utils\OM.Utils.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />

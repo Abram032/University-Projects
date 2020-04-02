@@ -2,7 +2,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OM.Models\OM.Models.csproj" />
-    <ProjectReference Include="..\OM.Utils\OM.Utils.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

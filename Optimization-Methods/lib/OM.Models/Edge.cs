@@ -13,7 +13,9 @@ namespace OM.Models
         public string VertexA_Name { get; set; }
         ///*Serialization use only
         public string VertexB_Name { get; set; }
-
+        //!Technical field only
+        [JsonIgnore]
+        public bool IsMatched { get; set; }
         //!To avoid loops and nested properties
         [JsonIgnore]
         public Vertex VertexA { get; set; }
