@@ -149,7 +149,7 @@ int main()
     // std::cin >> row1;
     // std::cout << "Target row to swap with: ";
     // std::cin >> row2;
-    // SwapRow(A, 1, 2, n);
+    SwapRow(A, 1, 2, n);
     PrintMatrix(A, n, n, "A");
 
     L = new double* [n];
