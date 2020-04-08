@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AOP.Sorting.Abstractions\AOP.Sorting.Abstractions.csproj" />
+    <ProjectReference Include="..\AOP.Sorting.Utils\AOP.Sorting.Utils.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

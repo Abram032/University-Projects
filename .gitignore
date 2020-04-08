@@ -1,9 +1,13 @@
-Advanced-Objective-Programming/lib/AOP.Sorting/bin/*
-Advanced-Objective-Programming/lib/AOP.Sorting/obj/*
+Advanced-Objective-Programming/lib/AOP.Sorting.Algorithms/bin/*
+Advanced-Objective-Programming/lib/AOP.Sorting.Algorithms/obj/*
 Advanced-Objective-Programming/lib/AOP.Sorting.Abstractions/bin/*
 Advanced-Objective-Programming/lib/AOP.Sorting.Abstractions/obj/*
 Advanced-Objective-Programming/src/AOP.Console/bin/*
 Advanced-Objective-Programming/src/AOP.Console/obj/*
+Advanced-Objective-Programming/lib/AOP.Sorting.Utils/bin/*
+Advanced-Objective-Programming/lib/AOP.Sorting.Utils/obj/*
+Advanced-Objective-Programming/lib/AOP.Sorting.Models/bin/*
+Advanced-Objective-Programming/lib/AOP.Sorting.Models/obj/*
 
 Parallel-Programming/Task-1/out.*
 Parallel-Programming/Task-1/out

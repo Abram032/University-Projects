@@ -1,17 +1,40 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AOP.Sorting.Abstractions;
+using AOP.Sorting.Models;
+using AOP.Sorting.Utils;
 
 namespace AOP.Sorting.Algorithms
 {
-    public static class MergeSort
+    public class MergeSort : ISorter
     {
-        public static void Sort<T>(IList<T> array) where T : IComparable<T>, IEquatable<T>, IConvertible
-            => MSort(array, 0, array.Count - 1);
+        public async Task<Result<T>> Sort<T>(IList<T> values) where T : struct, IComparable<T>, IEquatable<T>, IConvertible
+        {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
 
-        private static void MSort<T>(IList<T> array, int left, int right) where T : IComparable<T>, IEquatable<T>, IConvertible
+            MSort(values, 0, values.Count - 1);
+
+            stopwatch.Stop();
+
+            var validationResult = Helpers.Validate<T>(values);
+            var result = new Result<T>
+            {
+                Succeded = validationResult,
+                Errors = (validationResult) ? new List<string>() : new List<string> { "Values are not sorted." },
+                TimeElapsed = stopwatch.ElapsedMilliseconds,
+                TicksElapsed = stopwatch.ElapsedTicks,
+                Values = values
+            };
+
+            return result;
+        }
+
+        private void MSort<T>(IList<T> array, int left, int right) where T : IComparable<T>, IEquatable<T>, IConvertible
         {
             if (left < right)
             {
@@ -24,7 +47,7 @@ namespace AOP.Sorting.Algorithms
             }
         }
 
-        private static void Merge<T>(IList<T> array, int left, int middle, int right) where T : IComparable<T>, IEquatable<T>, IConvertible
+        private void Merge<T>(IList<T> array, int left, int middle, int right) where T : IComparable<T>, IEquatable<T>, IConvertible
         {
             var leftArray = new T[middle - left + 1];
             var rightArray = new T[right - middle];
