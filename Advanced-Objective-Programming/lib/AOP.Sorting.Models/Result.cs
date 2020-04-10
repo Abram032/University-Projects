@@ -5,6 +5,7 @@ namespace AOP.Sorting.Models
 {
     public class Result<T>
     {
+        public string Algorithm { get; set; }
         public bool Succeded { get; set; }
         public IList<string> Errors { get; set; }
         public long TimeElapsed { get; set; }

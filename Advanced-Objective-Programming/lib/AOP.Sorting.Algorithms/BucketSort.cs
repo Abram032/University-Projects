@@ -29,7 +29,7 @@ namespace AOP.Sorting.Algorithms
 
         public async Task<Result<T>> Sort<T>(IList<T> values) where T : struct, IComparable<T>, IEquatable<T>, IConvertible
         {
-            return await Sort(values, new InsertionSort());
+            return await Sort(values, new QuickSort());
         }
 
         public async Task<Result<T>> Sort<T>(IList<T> values, ISorter algorithm) where T : struct, IComparable<T>, IEquatable<T>, IConvertible
@@ -87,6 +87,7 @@ namespace AOP.Sorting.Algorithms
             var validationResult = Helpers.Validate<T>(values);
             var result = new Result<T>
             {
+                Algorithm = this.GetType().Name,
                 Succeded = validationResult,
                 Errors = (validationResult) ? new List<string>() : new List<string> { "Values are not sorted." },
                 TimeElapsed = stopwatch.ElapsedMilliseconds,

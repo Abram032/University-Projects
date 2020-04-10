@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using AOP.Sorting.Abstractions;
 using AOP.Sorting.Algorithms;
+using AOP.Sorting.Models;
 using AOP.Sorting.Utils;
 
 namespace AOP.Console
@@ -11,10 +13,10 @@ namespace AOP.Console
     {
         static async Task Main(string[] args)
         {
-            //int[] array = {10, 17, 23, 3, 14, 57, 2345, -17};
-            int[] array = Helpers.GenerateArray<int>(100);
+            byte[] array = Helpers.GenerateArray<byte>(100000);
             System.Console.WriteLine("Generated array:");
-            Helpers.Print(array);
+            //Helpers.Print(array);
+            System.Console.WriteLine();
 
             List<ISorter> algorithms = new List<ISorter>
             {
@@ -26,26 +28,73 @@ namespace AOP.Console
                 new QuickSort()
             };
 
+            System.Console.WriteLine("Running algorithms, one after another: ");
+            System.Console.WriteLine();
+
+            var stopwatch = new Stopwatch();
+            var results = new List<Result<byte>>();
+
+            stopwatch.Start();
+
             foreach(var algorithm in algorithms)
             {
-                IList<int> clone = array.Clone() as IList<int>;
-                var result = await algorithm.Sort(clone);
-                System.Console.WriteLine($"{algorithm.GetType().Name}:");
-                System.Console.WriteLine($"Succeeded: {result.Succeded}");
-                System.Console.WriteLine($"Time elapsed: {result.TimeElapsed} ms");
-                System.Console.WriteLine($"Ticks elapsed: {result.TicksElapsed}");
-                if(!result.Succeded)
-                {   
-                    System.Console.WriteLine($"Errors:");
-                    foreach(var error in result.Errors)
-                    {
-                        System.Console.WriteLine($"\t{error}");
-                    }
+                IList<byte> clone = array.Clone() as IList<byte>;             
+                try 
+                {
+                    results.Add(await algorithm.Sort(clone));       
                 }
-                System.Console.WriteLine($"Values:");
-                Helpers.Print(result.Values);              
-                System.Console.WriteLine();
+                catch(Exception e)
+                {
+                    results.Add(new Result<byte> {
+                        Algorithm = algorithm.GetType().Name,
+                        Succeded = false,
+                        Errors = new List<string> { e.Message },
+                        Values = null,
+                        TicksElapsed = 0,
+                        TimeElapsed = 0
+                    });
+                }            
             }
+
+            stopwatch.Stop();
+
+            Helpers.PrintResults<byte>(results);
+
+            System.Console.WriteLine($"Total time: {stopwatch.ElapsedMilliseconds} ms");
+            System.Console.WriteLine($"Total ticks: {stopwatch.ElapsedTicks}");
+            System.Console.WriteLine();
+
+            // stopwatch.Restart();
+
+            // System.Console.WriteLine("Running algorithms, in parallel: ");
+            // System.Console.WriteLine();
+            
+            // stopwatch.Start();
+            // Parallel.ForEach(algorithms, async (algorithm) => {
+            //     IList<byte> clone = array.Clone() as IList<byte>;             
+            //     try 
+            //     {
+            //         results.Add(await algorithm.Sort(clone));       
+            //     }
+            //     catch(Exception e)
+            //     {
+            //         results.Add(new Result<byte> {
+            //             Algorithm = algorithm.GetType().Name,
+            //             Succeded = false,
+            //             Errors = new List<string> { e.Message },
+            //             Values = null,
+            //             TicksElapsed = 0,
+            //             TimeElapsed = 0
+            //         });
+            //     }
+            // });
+            // stopwatch.Stop();
+
+            // Helpers.PrintResults<byte>(results);
+
+            // System.Console.WriteLine($"Total time: {stopwatch.ElapsedMilliseconds} ms");
+            // System.Console.WriteLine($"Total ticks: {stopwatch.ElapsedTicks}");
+            // System.Console.WriteLine();
         }
     }
 }

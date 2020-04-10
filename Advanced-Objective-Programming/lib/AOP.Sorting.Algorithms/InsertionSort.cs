@@ -33,6 +33,7 @@ namespace AOP.Sorting.Algorithms
             var validationResult = Helpers.Validate<T>(values);
             var result = new Result<T>
             {
+                Algorithm = this.GetType().Name,
                 Succeded = validationResult,
                 Errors = (validationResult) ? new List<string>() : new List<string> { "Values are not sorted." },
                 TimeElapsed = stopwatch.ElapsedMilliseconds,
