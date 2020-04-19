@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace AOP.Sorting.Abstractions
+namespace AOP.Sorting.Models
 {
     public class TypeNotAllowedException : Exception
     {
