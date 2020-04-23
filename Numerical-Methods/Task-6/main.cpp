@@ -386,7 +386,7 @@ int main()
     std::cin >> n;
 
     //? Testing
-    //n = 5;
+    n = 5;
 
     //Creating matrixes
     double** L = CreateMatrix(n);
@@ -397,22 +397,22 @@ int main()
     double* x_prim = CreateArray(n);
 
     //? Testing
-    // double** A = new double*[n];
-    // A[0] = new double[5] {2.1000000000e+01, 0.0000000000e+00, 7.7000000000e+02, 0.0000000000e+00, 5.0666000000e+04};
-    // A[1] = new double[5] {0.0000000000e+00, 7.7000000000e+02, 0.0000000000e+00, 5.0666000000e+04, 0.0000000000e+00};  
-    // A[2] = new double[5] {7.7000000000e+02, 0.0000000000e+00, 5.0666000000e+04, 0.0000000000e+00, 3.9568100000e+06};  
-    // A[3] = new double[5] {0.0000000000e+00, 5.0666000000e+04, 0.0000000000e+00, 3.9568100000e+06, 0.0000000000e+00}; 
-    // A[4] = new double[5] {5.0666000000e+04, 0.0000000000e+00, 3.9568100000e+06, 0.0000000000e+00, 3.3546266600e+08};
+    double** A = new double*[n];
+    A[0] = new double[5] {2.1000000000e+01, 0.0000000000e+00, 7.7000000000e+02, 0.0000000000e+00, 5.0666000000e+04};
+    A[1] = new double[5] {0.0000000000e+00, 7.7000000000e+02, 0.0000000000e+00, 5.0666000000e+04, 0.0000000000e+00};  
+    A[2] = new double[5] {7.7000000000e+02, 0.0000000000e+00, 5.0666000000e+04, 0.0000000000e+00, 3.9568100000e+06};  
+    A[3] = new double[5] {0.0000000000e+00, 5.0666000000e+04, 0.0000000000e+00, 3.9568100000e+06, 0.0000000000e+00}; 
+    A[4] = new double[5] {5.0666000000e+04, 0.0000000000e+00, 3.9568100000e+06, 0.0000000000e+00, 3.3546266600e+08};
 
-    double** A = InsertMatrix(n, "A");
-    std::cout << "Inserted matrix:" << std::endl;
+    // double** A = InsertMatrix(n, "A");
+    // std::cout << "Inserted matrix:" << std::endl;
     PrintMatrix(A, n, n, "A");
 
     //? Testing
-    //double* B = new double[5] {1.5278900000e+05, 1.0210200000e+05, 1.1921866000e+07, 7.9642860000e+06, 1.0103954740e+09};
+    double* B = new double[5] {1.5278900000e+05, 1.0210200000e+05, 1.1921866000e+07, 7.9642860000e+06, 1.0103954740e+09};
     
-    double* B = InsertArray(n, "B");
-    std::cout << "Inserted matrix:" << std::endl;
+    //double* B = InsertArray(n, "B");
+    //std::cout << "Inserted matrix:" << std::endl;
     PrintMatrix(B, n, "B");
 
     //Initial setup for L and P
@@ -441,6 +441,7 @@ int main()
     DooLittleDecomposition(n, A, L, U, P);
 
     P = Transpose(P, n);
+    A = Multiply(A, P, n);
 
     SolveLinearEquation(n, L, U, P, B, y, x, x_prim);
 
@@ -487,6 +488,7 @@ int main()
     DooLittleDecomposition(n, A_scaled, L_scaled, U_scaled, P_scaled);
 
     P = Transpose(P_scaled, n);
+    A_scaled = Multiply(A_scaled, P_scaled, n);
 
     SolveLinearEquation(n, L_scaled, U_scaled, P_scaled, B_scaled, y_scaled, x_scaled, x_scaled_prim);
 

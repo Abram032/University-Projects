@@ -9,22 +9,22 @@ namespace OM.Models
     {
         public string Name { get; set; }
         public int Weight { get; set; }
-        //!Technical field only
-        [JsonIgnore]
         public Color Color { get; set; }
-        //!Technical field only
-        [JsonIgnore]
         public bool IsVisited { get; set; }
-        //!Technical field only
-        [JsonIgnore]
         public bool IsMatched { get; set; }
-        //!To avoid loops and nested properties
-        [JsonIgnore]
         public ICollection<Vertex> NeighbouringVertices { get; set; }
-        //!To avoid loops and nested properties
-        [JsonIgnore]
         public ICollection<Edge> ConnectedEdges { get; set; }
 
+        public Vertex(string name)
+        {
+            Name = name;
+            Color = Color.None;
+            IsVisited = false;
+            IsMatched = false;
+            Weight = 0;
+            NeighbouringVertices = new List<Vertex>();
+            ConnectedEdges = new List<Edge>();
+        }
     }
 
     public enum Color

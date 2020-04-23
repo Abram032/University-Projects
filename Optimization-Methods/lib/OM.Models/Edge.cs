@@ -9,28 +9,22 @@ namespace OM.Models
         public string Name { get; set; }
         public int Weight { get; set; }
         public bool IsDirected { get; set; }
-        ///*Serialization use only
-        public string VertexA_Name { get; set; }
-        ///*Serialization use only
-        public string VertexB_Name { get; set; }
-        //!Technical field only
-        [JsonIgnore]
         public bool IsMatched { get; set; }
-        //!To avoid loops and nested properties
-        [JsonIgnore]
         public Vertex VertexA { get; set; }
-        //!To avoid loops and nested properties
-        [JsonIgnore]
         public Vertex VertexB { get; set; }
+
+        public Edge(Vertex a, Vertex b, int weight = 0, bool isDirected = false)
+        {
+            Name = $"{a.Name}-{b.Name}";
+            Weight = weight;
+            VertexA = a;
+            VertexB = b;
+            IsDirected = isDirected;
+            ConnectVertices(VertexA, VertexB, IsDirected);
+        }
 
         public void ConnectVertices(Vertex a, Vertex b, bool isDirected = false)
         {
-            VertexA = a;
-            VertexB = b;
-            VertexA_Name = a.Name;
-            VertexB_Name = b.Name;
-            IsDirected = isDirected;
-
             if(a.ConnectedEdges == null) {
                 a.ConnectedEdges = new List<Edge>();
             }
@@ -58,9 +52,6 @@ namespace OM.Models
         
         public void DisconnectVertices()
         {
-            VertexA_Name = null;
-            VertexB_Name = null;
-
             VertexA.ConnectedEdges.Remove(this);
             VertexB.ConnectedEdges.Remove(this);
 

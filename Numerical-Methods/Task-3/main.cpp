@@ -20,7 +20,7 @@ int main()
     printf("Enter value: ");
     float value;
     std::cin >> value;
-    printf("Entered value: %.23f\n", value);
+    printf("Entered value: %e\n", value);
     //!Default representation on my device is little endian
     
     //!byte_array is saved as little endian

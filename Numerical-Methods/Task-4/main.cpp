@@ -143,13 +143,7 @@ int main()
     PrintMatrix(LU, n, n, "A = LU");
     
     //! PART 2 - LU factorization with partial pivoting
-    //Swapping one of the rows
-    // int row1, row2;
-    // std::cout << "Which row to swap: ";
-    // std::cin >> row1;
-    // std::cout << "Target row to swap with: ";
-    // std::cin >> row2;
-    SwapRow(A, 1, 2, n);
+
     PrintMatrix(A, n, n, "A");
 
     L = new double* [n];

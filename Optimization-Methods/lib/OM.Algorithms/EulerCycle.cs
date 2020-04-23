@@ -10,45 +10,41 @@ namespace OM.Algorithms
     {
         public string Search(Graph g)
         {
-            var path = new Stack<Vertex>();
-            var result = new StringBuilder();
+            var stack = new Stack<Vertex>();
+            var path = new List<Vertex>();
 
             var isValid = IsGraphValid(g);
             if(!isValid) {
                 return "Graph doesn't contain euler cycle.\n";
             }
 
-            while(g.Vertices.Any(v => v.ConnectedEdges.Any()))
+            stack.Push(g.Vertices.FirstOrDefault());
+
+            while(stack.Count > 0)
             {
-                var vertex = g.Vertices.FirstOrDefault(v => v.ConnectedEdges.Any());
-                result.Append($"{vertex.Name} -> ");
-
-                do 
+                var vertex = stack.Peek();
+                if(vertex.NeighbouringVertices.Count > 0)
                 {
-                    while(vertex.ConnectedEdges.Any()) 
-                    {
-                        var edge = vertex.ConnectedEdges.FirstOrDefault();
-                        var nextVertex = edge.GetOpposingVertex(vertex);
-                        path.Push(vertex);
-                        edge.DisconnectVertices();
-                        vertex = nextVertex;
-                    }
+                    var edge = vertex.ConnectedEdges.FirstOrDefault();
+                    var neighbour = edge.GetOpposingVertex(vertex);
+                    edge.DisconnectVertices();
+                    stack.Push(neighbour);
+                }
+                else
+                {
+                    stack.Pop();
+                    path.Insert(0, vertex);
+                }
+            }
 
-                    if(path.Count > 0)
-                    {
-                        vertex = path.Pop();
-                        if(path.Count > 0)
-                            result.Append($"{vertex.Name} -> ");                        
-                        else
-                            result.Append($"{vertex.Name}");
-                    }
-
-                } while(path.Count > 0);
-
-                result.AppendLine();
-            }         
+            var sb = new StringBuilder();
+            foreach(var vertex in path) 
+            {
+                sb.Append($"{vertex.Name} -> ");
+            }
+            sb.Remove(sb.Length - 4, 4);
             
-            return result.ToString();     
+            return sb.ToString();     
         }
 
         private bool IsGraphValid(Graph g)

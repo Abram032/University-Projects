@@ -13,6 +13,8 @@ namespace OM.Console
     {
         static void Main(string[] args)
         {
+            var path = Environment.CurrentDirectory;
+
             // //!Euler Cycle / Maximal Matching
             // var utils = new GraphUtils();
             // const string basePath = "../../resources/graphs";
