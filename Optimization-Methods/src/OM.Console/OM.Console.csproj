@@ -4,11 +4,13 @@
     <ProjectReference Include="..\..\lib\OM.Algorithms\OM.Algorithms.csproj" />
     <ProjectReference Include="..\..\lib\OM.Utils\OM.Utils.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-  </ItemGroup>
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Include="..\..\resources\graphs\*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>  
+  </ItemGroup>
 </Project>
