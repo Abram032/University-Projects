@@ -9,15 +9,21 @@ namespace OM.Algorithms
 {
     public class MaximalMatching
     {
-        public void Search(Graph graph, List<Vertex> v1, List<Vertex> v2)
+        public string Search(Graph graph)
         {
             var bfs = new BFS();
-            var utils = new GraphUtils();
-            foreach(var vertex in v1)
+
+            bfs.ColorGraph(graph, graph.Vertices.FirstOrDefault());
+            if(graph.IsGraphBipartite(out var V1, out var V2) == false)
+            {
+                return "Graph is not bipartite!";
+            }
+
+            foreach(var vertex in V1)
             {
                 if(vertex.IsMatched == false)
                 {
-                    var match = vertex.NeighbouringVertices.FirstOrDefault(v => v2.Contains(v) && v.IsMatched == false);
+                    var match = vertex.NeighbouringVertices.FirstOrDefault(v => V2.Contains(v) && v.IsMatched == false);
                     if(match != null)
                     {
                         vertex.IsMatched = true;
@@ -33,10 +39,21 @@ namespace OM.Algorithms
                     else
                     {
                         var path = bfs.FindPathToNearestUnmatched(graph, vertex);
-                        utils.ReverseMatching(graph, path);
+                        graph.ReverseMatching(path);
                     }
                 }
             }
+
+            var sb = new StringBuilder();
+            foreach(var matchedEdge in graph.Edges.Where(e => e.IsMatched))
+            {
+                sb.Append($"{matchedEdge.Name} | ");
+            }
+            if(sb.Length > 2)
+            {
+                sb.Remove(sb.Length - 3, 3);
+            }
+            return sb.ToString();
         }
     }
 }

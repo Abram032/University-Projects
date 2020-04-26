@@ -9,7 +9,11 @@ namespace OM.Algorithms
 {
     public class HungarianMethod
     {
-        public int[,] Resolve(int[,] matrix)
+        public string Resolve(Graph graph)
+        {
+            return Resolve(graph.ToMatrix());
+        }
+        public string Resolve(int[,] matrix)
         {
             int n = matrix.GetLength(0);
             int m = matrix.GetLength(1);
@@ -88,6 +92,30 @@ namespace OM.Algorithms
                 {
                     break;
                 }
+                if(linesCount == n)
+                {
+                    Array.Clear(result, 0, result.Length);
+                    Array.Clear(rowsCovered, 0, rowsCovered.Length);
+                    Array.Clear(columnsCovered, 0, columnsCovered.Length);
+
+                    //Finding independent zeros
+                    for(int i = 0; i < n; i++)
+                    {
+                        for(int j = 0; j < m; j++)
+                        {
+                            if(matrix[i,j] == 0 && !rowsCovered[i] && !columnsCovered[j])
+                            {
+                                result[i, j] = 1;
+                                rowsCovered[i] = true;
+                                columnsCovered[j] = true;
+                            }
+                        }
+                    }
+                    if(IsResolved(result))
+                    {
+                        break;
+                    }
+                }
 
                 //Finding minimum not covered by lines
                 var minimum = int.MaxValue;
@@ -118,15 +146,25 @@ namespace OM.Algorithms
                     }
                 }
             }
+            
+            var sb = new StringBuilder();
+            for(int i = 0; i < n; i++) 
+            {
+                for(int j = 0; j < m; j++)
+                {
+                    if(result[i,j] == 1) 
+                    {
+                        sb.Append($"{i+1}-{j+1} | ");
+                    }
+                }
+            }
+            if(sb.Length > 2)
+            {
+                sb.Remove(sb.Length - 3, 3);
+            }
 
-            return result;
+            return sb.ToString();
         }
-
-        private bool IsCovered(int[,] matrix, int i, int j)
-            => matrix.GetRow(i).Contains(1) || matrix.GetColumn(j).Contains(1);
-
-        private bool IsDoubleCovered(int[,] matrix, int i, int j)
-            => matrix.GetRow(i).Contains(1) && matrix.GetColumn(j).Contains(1);
 
         private bool IsResolved(int[,] matrix)
         {

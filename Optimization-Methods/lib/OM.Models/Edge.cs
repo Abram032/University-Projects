@@ -8,10 +8,13 @@ namespace OM.Models
     {
         public string Name { get; set; }
         public int Weight { get; set; }
-        public bool IsDirected { get; set; }
         public bool IsMatched { get; set; }
         public Vertex VertexA { get; set; }
         public Vertex VertexB { get; set; }
+
+        public Edge()
+        {
+        }
 
         public Edge(Vertex a, Vertex b, int weight = 0, bool isDirected = false)
         {
@@ -19,12 +22,14 @@ namespace OM.Models
             Weight = weight;
             VertexA = a;
             VertexB = b;
-            IsDirected = isDirected;
-            ConnectVertices(VertexA, VertexB, IsDirected);
+            ConnectVertices(VertexA, VertexB, isDirected);
         }
 
         public void ConnectVertices(Vertex a, Vertex b, bool isDirected = false)
         {
+            VertexA = a;
+            VertexB = b;
+            
             if(a.ConnectedEdges == null) {
                 a.ConnectedEdges = new List<Edge>();
             }

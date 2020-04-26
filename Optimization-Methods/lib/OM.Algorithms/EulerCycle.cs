@@ -15,7 +15,7 @@ namespace OM.Algorithms
 
             var isValid = IsGraphValid(g);
             if(!isValid) {
-                return "Graph doesn't contain euler cycle.\n";
+                return "Graph doesn't contain euler cycle.";
             }
 
             stack.Push(g.Vertices.FirstOrDefault());
@@ -37,12 +37,20 @@ namespace OM.Algorithms
                 }
             }
 
+            if(g.Vertices.Any(e => e.ConnectedEdges.Count > 0))
+            {
+                return "Graph doesn't contain euler cycle.";
+            }
+
             var sb = new StringBuilder();
             foreach(var vertex in path) 
             {
                 sb.Append($"{vertex.Name} -> ");
             }
-            sb.Remove(sb.Length - 4, 4);
+            if(sb.Length > 3)
+            {
+                sb.Remove(sb.Length - 4, 4);
+            }
             
             return sb.ToString();     
         }
@@ -50,19 +58,27 @@ namespace OM.Algorithms
         private bool IsGraphValid(Graph g)
         {
             if(g.Vertices.Any(v => v.ConnectedEdges.Count % 2 != 0) &&
-                g.Edges.All(e => e.IsDirected == false))
+                g.IsDirected == false)
             {
                 return false;
             }
 
-            if(g.Edges.Any(e => e.IsDirected == true))
+            if(g.Vertices.Any(v => v.NeighbouringVertices == null || 
+                v.NeighbouringVertices.Count == 0 || 
+                v.ConnectedEdges == null ||
+                v.ConnectedEdges.Count == 0))
+            {
+                return false;
+            }
+
+            if(g.IsDirected)
             {
                 foreach(var vertex in g.Vertices)
                 {
-                    //Amount of directed edges for which vertex is ending point
-                    var incomingEdges = g.Edges.Count(e => e.VertexB == vertex && e.IsDirected);
-                    //Amount of undirected edges to which vertex is connected
+                    //Amount of outgoing edges to which vertex is connected
                     var outgoingEdges = vertex.ConnectedEdges.Count;
+                    //Amount of incoming edges for which vertex is ending point
+                    var incomingEdges = g.Edges.Count(e => e.VertexB == vertex);
 
                     if(incomingEdges != outgoingEdges) {
                         return false;

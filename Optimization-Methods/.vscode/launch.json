@@ -11,7 +11,7 @@
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/src/OM.Console/bin/Debug/netcoreapp3.1/OM.Console.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/src/OM.Console",
+            "cwd": "${workspaceFolder}/src/OM.Console/bin/Debug/netcoreapp3.1",
             "console": "internalConsole",
             "stopAtEntry": false
         },
