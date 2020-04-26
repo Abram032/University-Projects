@@ -75,14 +75,14 @@ namespace OM.Console
 
             System.Console.WriteLine();
 
-            //!Hungarian method
-            var hungarianMethod = new HungarianMethod();
-            foreach(var graph in graphs)
-            {
-                var result = hungarianMethod.Resolve(graph.Copy());
-                System.Console.WriteLine($"Hungarian Method - {graph.Name}:");
-                System.Console.WriteLine($"{result}");
-            }
+            // //!Hungarian method
+            // var hungarianMethod = new HungarianMethod();
+            // foreach(var graph in graphs)
+            // {
+            //     var result = hungarianMethod.Resolve(graph.Copy());
+            //     System.Console.WriteLine($"Hungarian Method - {graph.Name}:");
+            //     System.Console.WriteLine($"{result}");
+            // }
         }
     }
 }

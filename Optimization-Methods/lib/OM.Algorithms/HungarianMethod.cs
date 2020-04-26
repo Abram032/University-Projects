@@ -92,30 +92,6 @@ namespace OM.Algorithms
                 {
                     break;
                 }
-                if(linesCount == n)
-                {
-                    Array.Clear(result, 0, result.Length);
-                    Array.Clear(rowsCovered, 0, rowsCovered.Length);
-                    Array.Clear(columnsCovered, 0, columnsCovered.Length);
-
-                    //Finding independent zeros
-                    for(int i = 0; i < n; i++)
-                    {
-                        for(int j = 0; j < m; j++)
-                        {
-                            if(matrix[i,j] == 0 && !rowsCovered[i] && !columnsCovered[j])
-                            {
-                                result[i, j] = 1;
-                                rowsCovered[i] = true;
-                                columnsCovered[j] = true;
-                            }
-                        }
-                    }
-                    if(IsResolved(result))
-                    {
-                        break;
-                    }
-                }
 
                 //Finding minimum not covered by lines
                 var minimum = int.MaxValue;
