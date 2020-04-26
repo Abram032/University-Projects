@@ -15,13 +15,32 @@ namespace OM.Console
         {
             //! File operations
             string path;
+            string[] files = new string[] {};
             if(args.Length > 0)
             {
                 path = args.FirstOrDefault();
+                if(File.Exists(path) || Directory.Exists(path))
+                {
+                    var attr = File.GetAttributes(path);
+                    if(attr == FileAttributes.Directory) 
+                    {
+                        files = Directory.GetFiles(path);
+                    }
+                    else
+                    {
+                        files = new string[] { path };
+                    }
+                }
+                else
+                {
+                    System.Console.WriteLine($"File or directory at {path} does not exist.");
+                    return;
+                }
             }
             else if(Directory.Exists($"{Directory.GetCurrentDirectory()}/graphs"))
             {
                 path = $"{Directory.GetCurrentDirectory()}/graphs";
+                files = Directory.GetFiles(path);
             }
             else 
             {
@@ -29,7 +48,6 @@ namespace OM.Console
                 return;
             }
 
-            var files = Directory.GetFiles(path);
             var graphs = new List<Graph>();
             foreach(var file in files)
             {

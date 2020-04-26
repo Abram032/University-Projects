@@ -5,7 +5,7 @@ Usage:
 dotnet OM.Console.dll [Path]
 ```
 
-If no path is given, `[Path]` will default to ./graphs. Program will load all files within the given directory. Any file placed under ./resources/graphs in the root folder, will be copied on build to ./graphs directory in output directory.
+If no path is given, `[Path]` will default to ./graphs. `[Path]` can be either a file or a directory. If `[Path]` is a directory program will load all files inside the given directory. Any file placed under ./resources/graphs in the root folder, will be copied on build to ./graphs directory in output directory.
 
 Data format:
 ```
