@@ -14,7 +14,7 @@ namespace OM.Algorithms
             var bfs = new BFS();
 
             bfs.ColorGraph(graph, graph.Vertices.FirstOrDefault());
-            if(graph.IsGraphBipartite(out var V1, out var V2) == false)
+            if(!graph.IsBipartite(out var V1, out var V2))
             {
                 return "Graph is not bipartite!";
             }

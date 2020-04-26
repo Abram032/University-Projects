@@ -71,7 +71,7 @@ namespace OM.Models
             }
             return matrix;
         }
-        public bool IsGraphBipartite(out List<Vertex> v1, out List<Vertex> v2)
+        public bool IsBipartite(out List<Vertex> v1, out List<Vertex> v2)
         {
             v1 = null;
             v2 = null;
