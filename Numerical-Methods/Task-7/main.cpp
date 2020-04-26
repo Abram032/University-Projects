@@ -552,12 +552,12 @@ int main()
 
     ScaleMatrix(m, alpha, beta);
 
-    // PrintMatrix(sigma, n, "sigma");
-    // PrintMatrix(x, n, "x");
-    // PrintMatrix(y, n, "y");
-    // PrintMatrix(A, n, m, "A");
-    // PrintMatrix(A_T, m, n, "A^T");
-    // PrintMatrix(b, n, "b");
+    PrintMatrix(sigma, n, "sigma");
+    PrintMatrix(x, n, "x");
+    PrintMatrix(y, n, "y");
+    PrintMatrix(A, n, m, "A");
+    PrintMatrix(A_T, m, n, "A^T");
+    PrintMatrix(b, n, "b");
     PrintMatrix(alpha, m, m, "alpha");
     PrintMatrix(beta, m, "beta");
 
@@ -568,9 +568,9 @@ int main()
 
     SolveLinearEquation(m, L, U, P, beta, z, a, a_prim);
 
-    // PrintMatrix(L, m, m, "L");
-    // PrintMatrix(U, m, m, "U");
-    // PrintMatrix(P, m, m, "P");
+    PrintMatrix(L, m, m, "L");
+    PrintMatrix(U, m, m, "U");
+    PrintMatrix(P, m, m, "P");
     PrintMatrix(a, m, "a");
 
     double** L_inv = InverseL(m, L);

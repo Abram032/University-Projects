@@ -144,7 +144,7 @@ int main()
     
     //! PART 2 - LU factorization with partial pivoting
 
-    PrintMatrix(A, n, n, "A");
+    PrintMatrix(A, n, n, "A (Partial)");
 
     L = new double* [n];
     U = new double* [n];
@@ -204,15 +204,15 @@ int main()
         }
     }
 
-    PrintMatrix(L, n, n, "L");
-    PrintMatrix(U, n, n, "U");
-    PrintMatrix(P, n, n, "P");
+    PrintMatrix(L, n, n, "L (Partial)");
+    PrintMatrix(U, n, n, "U (Partial)");
+    PrintMatrix(P, n, n, "P (Partial)");
 
     LU = Multiply(L, U, n);
     //Transposing P
     P = Transpose(P, n);
     double** LUP = Multiply(LU, P, n);
-    PrintMatrix(LUP, n, n, "A = LUP");
+    PrintMatrix(LUP, n, n, "A = LUP (Partial)");
     //Release resources
     for(int i = 0; i < n; i++) {
         delete[] A[i];
