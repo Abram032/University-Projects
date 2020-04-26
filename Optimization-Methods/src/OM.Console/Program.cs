@@ -73,6 +73,8 @@ namespace OM.Console
                 System.Console.WriteLine($"{result}");
             }
 
+            System.Console.WriteLine();
+
             //!Hungarian method
             var hungarianMethod = new HungarianMethod();
             foreach(var graph in graphs)
