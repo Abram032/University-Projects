@@ -10,7 +10,7 @@ using AOP.Sorting.Utils;
 
 namespace AOP.Sorting.Algorithms
 {
-    public class BucketSort : ISorter, IBucketSort
+    public class BucketSort<T> : ISorter<T>, IBucketSort<T> where T : IComparable<T>, IConvertible
     {
         #region AllowedTypes
         private static readonly Type[] allowedTypes = 
@@ -27,22 +27,18 @@ namespace AOP.Sorting.Algorithms
             };
         #endregion
 
-        public async Task<Result<T>> Sort<T>(IList<T> values) where T : struct, IComparable<T>, IEquatable<T>, IConvertible
+        public IList<T> Sort(IList<T> values)
         {
-            return await Sort(values, new QuickSort());
+            return Sort(values, new QuickSort<T>());
         }
 
-        public async Task<Result<T>> Sort<T>(IList<T> values, ISorter algorithm) where T : struct, IComparable<T>, IEquatable<T>, IConvertible
+        public IList<T> Sort(IList<T> values, ISorter<T> algorithm)
         {
             if(!allowedTypes.Contains(typeof(T)))
             {
                 throw new TypeNotAllowedException($"Type of {typeof(T)} is not allowed in this method.");
             }
 
-            var stopwatch = new Stopwatch();
-
-            stopwatch.Start();
-            
             const int k = 10;
             var minValue = values.First();
             var maxValue = values.First();
@@ -69,7 +65,7 @@ namespace AOP.Sorting.Algorithms
             
             foreach(var bucket in buckets)
             {
-                await algorithm.Sort(bucket);
+                algorithm.Sort(bucket);
             }
 
             //Parallel.ForEach(buckets, async (bucket) => await algorithm.Sort(bucket));
@@ -82,20 +78,7 @@ namespace AOP.Sorting.Algorithms
                 }
             }
 
-            stopwatch.Stop();
-
-            var validationResult = Helpers.Validate<T>(values);
-            var result = new Result<T>
-            {
-                Algorithm = this.GetType().Name,
-                Succeded = validationResult,
-                Errors = (validationResult) ? new List<string>() : new List<string> { "Values are not sorted." },
-                TimeElapsed = stopwatch.ElapsedMilliseconds,
-                TicksElapsed = stopwatch.ElapsedTicks,
-                Values = values
-            };
-
-            return result;
+            return values;
         }
     }
 }

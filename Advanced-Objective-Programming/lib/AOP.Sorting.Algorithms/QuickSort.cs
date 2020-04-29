@@ -8,42 +8,26 @@ using AOP.Sorting.Utils;
 
 namespace AOP.Sorting.Algorithms
 {
-    public class QuickSort : ISorter
+    public class QuickSort<T> : ISorter<T> where T : IComparable<T>
     {
-        public async Task<Result<T>> Sort<T>(IList<T> values) where T : struct, IComparable<T>, IEquatable<T>, IConvertible 
+        public IList<T> Sort(IList<T> values)
         {
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-            
             QSort(values, 0, values.Count - 1);
-
-            stopwatch.Stop();
-
-            var validationResult = Helpers.Validate<T>(values);
-            var result = new Result<T>
-            {
-                Algorithm = this.GetType().Name,
-                Succeded = validationResult,
-                Errors = (validationResult) ? new List<string>() : new List<string> { "Values are not sorted." },
-                TimeElapsed = stopwatch.ElapsedMilliseconds,
-                TicksElapsed = stopwatch.ElapsedTicks,
-                Values = values
-            };
-
-            return result;
+            
+            return values;
         }
 
-        private void QSort<T>(IList<T> array, int low, int high) where T : IComparable<T>, IEquatable<T>, IConvertible
+        private void QSort(IList<T> array, int low, int high)
         {
             if(low < high)
             {
-                int pivot = Partiton<T>(array, low, high);
+                int pivot = Partiton(array, low, high);
                 QSort(array, low, pivot - 1);
                 QSort(array, pivot + 1, high);
             }
         }
 
-        private int Partiton<T>(IList<T> array, int low, int high) where T : IComparable<T>, IEquatable<T>, IConvertible
+        private int Partiton(IList<T> array, int low, int high)
         {
             var pivot = array[high];
             int i = low - 1;

@@ -29,11 +29,10 @@ namespace AOP.Sorting.Utils
                     System.Console.WriteLine($"\t{error}");
                 }
             }
-            System.Console.WriteLine($"Values:");
             System.Console.WriteLine();
         }
 
-        public static void PrintResults<T>(IList<Result<T>> results)
+        public static void PrintResults<T>(IEnumerable<Result<T>> results)
         {
             foreach(var result in results)
             {
@@ -51,45 +50,18 @@ namespace AOP.Sorting.Utils
             return true;
         }
 
-        public static T[] GenerateArray<T>(int length) where T : struct, IComparable<T>, IEquatable<T>, IConvertible
+        public static T[] GenerateArray<T>(double min, double max, int length) where T : IConvertible
         {
+            var rng = new Random((int)DateTime.Now.Ticks);
             var array = new T[length];
             for(int i = 0; i < length; i++)
             {
-                array[i] = GenerateValue<T>();
+                array[i] = GenerateValue<T>(rng, min, max);
             }
             return array;
         }
 
-        public static T GenerateValue<T>() where T : struct, IComparable<T>, IEquatable<T>, IConvertible
-        {
-            var rng = new Random((int)DateTime.Now.Ticks);
-            var type = typeof(T);
-            switch(type)
-            {
-                case var t when t == typeof(Byte) || t == typeof(Char):
-                    return (T)Convert.ChangeType(rng.Next(Byte.MinValue, Byte.MaxValue), type);
-                case var t when t == typeof(SByte):
-                    return (T)Convert.ChangeType(rng.Next(SByte.MinValue, SByte.MaxValue), type);
-                case var t when t == typeof(Int16):
-                    return (T)Convert.ChangeType(rng.Next(Int16.MinValue, Int16.MaxValue), type);
-                case var t when t == typeof(UInt16):
-                    return (T)Convert.ChangeType(rng.Next(UInt16.MinValue, UInt16.MaxValue), type);
-                case var t when t == typeof(Int32):
-                    return (T)Convert.ChangeType(rng.Next(), type);
-                case var t when t == typeof(UInt32):
-                    return (T)Convert.ChangeType(rng.Next((Int32)UInt32.MinValue, Int32.MaxValue), type);
-                case var t when t == typeof(Int64):
-                    return (T)Convert.ChangeType(rng.Next(), type);
-                case var t when t == typeof(UInt64):
-                    return (T)Convert.ChangeType((UInt64)rng.Next((Int32)UInt32.MinValue, Int32.MaxValue), type);
-                case var t when t == typeof(Single):
-                    return (T)Convert.ChangeType(rng.NextDouble() * (Single.MaxValue - Single.MinValue) + Single.MinValue, type);
-                case var t when t == typeof(Double):
-                    return (T)Convert.ChangeType(rng.NextDouble() * (Double.MaxValue - Double.MinValue) + Double.MinValue, type);
-                default:
-                    return default(T);
-            }
-        } 
+        public static T GenerateValue<T>(Random rng, double min, double max) where T : IConvertible
+            => (T)Convert.ChangeType((rng.NextDouble() * (max - min) + min), typeof(T));
     }
 }

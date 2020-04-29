@@ -6,95 +6,31 @@ using AOP.Sorting.Abstractions;
 using AOP.Sorting.Algorithms;
 using AOP.Sorting.Models;
 using AOP.Sorting.Utils;
+using System.Linq;
 
 namespace AOP.Console
 {
     class Program
     {
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
-            byte[] array = Helpers.GenerateArray<byte>(100000);
-            System.Console.WriteLine("Generated array:");
-            //Helpers.Print(array);
-            System.Console.WriteLine();
+            var array = Helpers.GenerateArray<int>(0, 250, 10000);
 
-            List<ISorter> algorithms = new List<ISorter>
+            System.Console.WriteLine("Starting algorithms...");
+
+            var algorithms = new List<ISorter<int>>
             {
-                new BubbleSort(),
-                new BucketSort(),
-                new CountingSort(),
-                new InsertionSort(),
-                new MergeSort(),
-                new QuickSort()
+                new BubbleSort<int>(),
+                new BucketSort<int>(),
+                new CountingSort<int>(),
+                new InsertionSort<int>(),
+                new MergeSort<int>(),
+                new QuickSort<int>()
             };
 
-            System.Console.WriteLine("Running algorithms, one after another: ");
-            System.Console.WriteLine();
-
-            var stopwatch = new Stopwatch();
-            var results = new List<Result<byte>>();
-
-            stopwatch.Start();
-
-            foreach(var algorithm in algorithms)
-            {
-                IList<byte> clone = array.Clone() as IList<byte>;             
-                try 
-                {
-                    results.Add(await algorithm.Sort(clone));       
-                }
-                catch(Exception e)
-                {
-                    results.Add(new Result<byte> {
-                        Algorithm = algorithm.GetType().Name,
-                        Succeded = false,
-                        Errors = new List<string> { e.Message },
-                        Values = null,
-                        TicksElapsed = 0,
-                        TimeElapsed = 0
-                    });
-                }            
-            }
-
-            stopwatch.Stop();
-
-            Helpers.PrintResults<byte>(results);
-
-            System.Console.WriteLine($"Total time: {stopwatch.ElapsedMilliseconds} ms");
-            System.Console.WriteLine($"Total ticks: {stopwatch.ElapsedTicks}");
-            System.Console.WriteLine();
-
-            // stopwatch.Restart();
-
-            // System.Console.WriteLine("Running algorithms, in parallel: ");
-            // System.Console.WriteLine();
-            
-            // stopwatch.Start();
-            // Parallel.ForEach(algorithms, async (algorithm) => {
-            //     IList<byte> clone = array.Clone() as IList<byte>;             
-            //     try 
-            //     {
-            //         results.Add(await algorithm.Sort(clone));       
-            //     }
-            //     catch(Exception e)
-            //     {
-            //         results.Add(new Result<byte> {
-            //             Algorithm = algorithm.GetType().Name,
-            //             Succeded = false,
-            //             Errors = new List<string> { e.Message },
-            //             Values = null,
-            //             TicksElapsed = 0,
-            //             TimeElapsed = 0
-            //         });
-            //     }
-            // });
-            // stopwatch.Stop();
-
-            // Helpers.PrintResults<byte>(results);
-
-            // System.Console.WriteLine($"Total time: {stopwatch.ElapsedMilliseconds} ms");
-            // System.Console.WriteLine($"Total ticks: {stopwatch.ElapsedTicks}");
-            // System.Console.WriteLine();
+            var analyzer = new PerformanceAnalyzer<int>();
+            var results = analyzer.Measure(algorithms, array);
+            Helpers.PrintResults<int>(results);
         }
     }
 }

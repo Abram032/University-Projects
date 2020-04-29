@@ -5,8 +5,8 @@ using AOP.Sorting.Models;
 
 namespace AOP.Sorting.Abstractions
 {
-    public interface ISorter
+    public interface ISorter<T> where T : IComparable<T>
     {
-        Task<Result<T>> Sort<T>(IList<T> values) where T : struct, IComparable<T>, IEquatable<T>, IConvertible;
+        IList<T> Sort(IList<T> values);
     }
 }

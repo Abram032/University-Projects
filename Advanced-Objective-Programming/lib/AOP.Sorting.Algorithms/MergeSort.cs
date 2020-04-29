@@ -10,77 +10,65 @@ using AOP.Sorting.Utils;
 
 namespace AOP.Sorting.Algorithms
 {
-    public class MergeSort : ISorter
+    public class MergeSort<T> : ISorter<T> where T : IComparable<T>
     {
-        public async Task<Result<T>> Sort<T>(IList<T> values) where T : struct, IComparable<T>, IEquatable<T>, IConvertible
+        public IList<T> Sort(IList<T> array)
         {
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-
-            MSort(values, 0, values.Count - 1);
-
-            stopwatch.Stop();
-
-            var validationResult = Helpers.Validate<T>(values);
-            var result = new Result<T>
+            if (array.Count <= 1) 
             {
-                Algorithm = this.GetType().Name,
-                Succeded = validationResult,
-                Errors = (validationResult) ? new List<string>() : new List<string> { "Values are not sorted." },
-                TimeElapsed = stopwatch.ElapsedMilliseconds,
-                TicksElapsed = stopwatch.ElapsedTicks,
-                Values = values
-            };
+                return array;
+            }
 
+            int middle = array.Count / 2;
+
+            IList<T> leftArray = new List<T>();
+            IList<T> rightArray = new List<T>();
+
+            for (int i = 0; i < middle; i++)
+            {
+                leftArray.Add(array[i]);
+            }
+            for (int i = middle; i < array.Count; i++)
+            {
+                rightArray.Add(array[i]);
+            }
+
+            leftArray = Sort(leftArray);
+            rightArray = Sort(rightArray);
+            return Merge(leftArray, rightArray);
+        }
+
+        private IList<T> Merge(IList<T> leftArray, IList<T> rightArray)
+        {
+            var result = new List<T>();
+            
+            while (leftArray.Any() || rightArray.Any())
+            {
+                if (leftArray.Any() && rightArray.Any())
+                {
+                    if (leftArray.First().CompareTo(rightArray.First()) <= 0)
+                    {
+                        result.Add(leftArray.First());
+                        leftArray.Remove(leftArray.First());      
+                    }
+                    else
+                    {
+                        result.Add(rightArray.First());
+                        rightArray.Remove(rightArray.First());
+                    }
+                }
+                else if (leftArray.Any())
+                {
+                    result.Add(leftArray.First());
+                    leftArray.Remove(leftArray.First());
+                }
+                else if (rightArray.Any())
+                {
+                    result.Add(rightArray.First());
+                    rightArray.Remove(rightArray.First());
+                }
+            }
             return result;
-        }
-
-        private void MSort<T>(IList<T> array, int left, int right) where T : IComparable<T>, IEquatable<T>, IConvertible
-        {
-            if (left < right)
-            {
-                int middle = (left + right) / 2;
-        
-                MSort(array, left, middle);
-                MSort(array, middle + 1, right);
-        
-                Merge(array, left, middle, right);
-            }
-        }
-
-        private void Merge<T>(IList<T> array, int left, int middle, int right) where T : IComparable<T>, IEquatable<T>, IConvertible
-        {
-            var leftArray = new T[middle - left + 1];
-            var rightArray = new T[right - middle];
-        
-            Array.Copy(array.ToArray(), left, leftArray, 0, middle - left + 1);
-            Array.Copy(array.ToArray(), middle + 1, rightArray, 0, right - middle);
-        
-            int i = 0;
-            int j = 0;
-            for (int k = left; k < right + 1; k++)
-            {
-                if (i == leftArray.Length)
-                {
-                    array[k] = rightArray[j];
-                    j++;
-                }
-                else if (j == rightArray.Length)
-                {
-                    array[k] = leftArray[i];
-                    i++;
-                }
-                else if (leftArray[i].CompareTo(rightArray[j]) <= 0)
-                {
-                    array[k] = leftArray[i];
-                    i++;
-                }
-                else
-                {
-                    array[k] = rightArray[j];
-                    j++;
-                }
-            }
         }
     }
 }

@@ -8,13 +8,10 @@ using AOP.Sorting.Utils;
 
 namespace AOP.Sorting.Algorithms
 {
-    public class InsertionSort : ISorter
+    public class InsertionSort<T> : ISorter<T> where T : IComparable<T>
     {
-        public async Task<Result<T>> Sort<T>(IList<T> values) where T : struct, IComparable<T>, IEquatable<T>, IConvertible
+        public IList<T> Sort(IList<T> values)
         {
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-
             for(int i = 1; i < values.Count; i++) 
             {
                 var value = values[i];
@@ -28,20 +25,7 @@ namespace AOP.Sorting.Algorithms
                 values[j + 1] = value;
             }
 
-            stopwatch.Stop();
-
-            var validationResult = Helpers.Validate<T>(values);
-            var result = new Result<T>
-            {
-                Algorithm = this.GetType().Name,
-                Succeded = validationResult,
-                Errors = (validationResult) ? new List<string>() : new List<string> { "Values are not sorted." },
-                TimeElapsed = stopwatch.ElapsedMilliseconds,
-                TicksElapsed = stopwatch.ElapsedTicks,
-                Values = values
-            };
-
-            return result;
+            return values;
         }
     }
 }
