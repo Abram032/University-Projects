@@ -9,23 +9,23 @@ int main(int argc, char* argv[])
     double sum = 0.0;
 
     double start = omp_get_wtime(); 
-    // #pragma omp parallel for reduction(+:sum)
-    // for(int i = 0; i < N; i++) {
-    //     double x = (i + 0.5) * step;
-    //     sum += 4.0/(1.0 + x*x);
-    // }
-
-    #pragma omp parallel
-    {
-        double sum_priv = 0.0;
-        #pragma omp for
-        for(int i = 0; i < N; i++) {
-            double x = (i + 0.5) * step;
-            sum += 4.0/(1.0 + x*x);
-        }
-        #pragma omp atomic
-        sum += sum_priv;
+    #pragma omp parallel for reduction(+:sum)
+    for(int i = 0; i < N; i++) {
+        double x = (i + 0.5) * step;
+        sum += 4.0/(1.0 + x*x);
     }
+
+    // #pragma omp parallel
+    // {
+    //     double sum_priv = 0.0;
+    //     #pragma omp for
+    //     for(int i = 0; i < N; i++) {
+    //         double x = (i + 0.5) * step;
+    //         sum += 4.0/(1.0 + x*x);
+    //     }
+    //     #pragma omp atomic
+    //     sum += sum_priv;
+    // }
     double end = omp_get_wtime(); 
 
     std::cout.precision(15);
