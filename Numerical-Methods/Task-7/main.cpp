@@ -473,10 +473,20 @@ double CalculateChiSquared(int n, int m, double* a, double* x, double* y, double
 int main()
 {
     int n, m;
-    // std::cout << "Enter n: ";
-    // std::cin >> n;
-    // std::cout << "Enter m: ";
-    // std::cin >> m;
+    bool useNoise = false;
+    char c_noise;
+    do {
+        std::cout << "Add noise? (y/n): ";
+        std::cin >> c_noise;
+        if(c_noise != 'y' && c_noise != 'n')
+        {
+            std::cout << "Please type in 'y' or 'n'." << std::endl;
+        }
+    } while(c_noise != 'y' && c_noise != 'n');
+    
+    if(c_noise == 'y') {
+        useNoise = true;
+    }
 
     //? Testing
     n = 20;
@@ -525,9 +535,17 @@ int main()
     //? Setting up x, y, sigma and b
     for(int i = 0; i < n; i++)
     {
-        sigma[i] = 0.5;
+        sigma[i] = 1.0;
+        if(useNoise) {
+            sigma[i] = abs(noise[i]);
+        }
+
         x[i] = i+1;
-        y[i] = 4 + (3 * x[i]) + (2 * pow(x[i], 2)) + (pow(x[i], 3)) + noise[i];
+        y[i] = 4 + (3 * x[i]) + (2 * pow(x[i], 2)) + (pow(x[i], 3));
+        if(useNoise) {
+            y[i] += noise[i];
+        }
+
         b[i] = y[i]/sigma[i];
     }
     //? Setting up L and P
@@ -586,13 +604,45 @@ int main()
     double alpha_inv_1Form = Matrix1Form(m, alpha_inv);
     double alpha_inv_infForm = MatrixInfForm(m, alpha_inv);
 
-    // printf("norm alpha: %.8e\n", alpha_infForm);
-    // printf("norm alpha^-1: %.8e\n", alpha_inv_infForm);
     printf("cond(alpha) (1): %.8e\n", alpha_1Form * alpha_inv_1Form);
     printf("cond(alpha) (Inf): %.8e\n\n", alpha_infForm * alpha_inv_infForm);
 
     printf("Chi^2: %.8e\n\n", CalculateChiSquared(n, m, a, x, y, sigma));
-    PrintMatrix(alpha_inv, m, m, "Covariant matrix (alpha)");
+
+
+    //Covariant matrix
+    double** L_non_scaled = CreateMatrix(m);
+    double** U_non_scaled = CreateMatrix(m);
+    double** P_non_scaled = CreateMatrix(m);
+
+    double* z_non_scaled = CreateArray(m);
+    double* a_non_scaled = CreateArray(m);
+    double* a_prim_non_scaled = CreateArray(m);
+
+    for(int i = 0; i < m; i++) {
+        L_non_scaled[i][i] = 1;
+        P_non_scaled[i][i] = 1;
+    }
+
+    double** alpha_non_scaled = Multiply(A_T, m, n, A, n, m);
+    double* beta_non_scaled = Multiply(A_T, m, n, b);
+
+    DooLittleDecomposition(m, alpha_non_scaled, L_non_scaled, U_non_scaled, P_non_scaled);
+
+    P_non_scaled = Transpose(P_non_scaled, m);
+    alpha_non_scaled = Multiply(alpha_non_scaled, P_non_scaled, m);
+
+    SolveLinearEquation(m, L_non_scaled, U_non_scaled, P_non_scaled, 
+        beta_non_scaled, z_non_scaled, a_non_scaled, a_prim_non_scaled);
+
+    double** L_inv_non_scaled = InverseL(m, L_non_scaled);
+    double** U_inv_non_scaled = InverseU(m, U_non_scaled);
+    double** P_inv_non_scaled = Transpose(P_non_scaled, m);
+    double** PU_inv_non_scaled = Multiply(P_inv_non_scaled, U_inv_non_scaled, m);
+    double** alpha_inv_non_scaled = Multiply(PU_inv_non_scaled, L_inv_non_scaled, m);
+    double** alpha_alpha_inv_non_scaled = Multiply(alpha_non_scaled, alpha_inv_non_scaled, m);
+
+    PrintMatrix(alpha_inv_non_scaled, m, m, "Covariant matrix (alpha)");
 
     // double* check = Multiply(alpha, m, m, a);
     // PrintMatrix(check, m, "check");

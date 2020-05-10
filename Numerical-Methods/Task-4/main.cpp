@@ -203,6 +203,7 @@ int main()
             }           
         }
     }
+    P = Transpose(P, n);
 
     PrintMatrix(L, n, n, "L (Partial)");
     PrintMatrix(U, n, n, "U (Partial)");
@@ -210,7 +211,6 @@ int main()
 
     LU = Multiply(L, U, n);
     //Transposing P
-    P = Transpose(P, n);
     double** LUP = Multiply(LU, P, n);
     PrintMatrix(LUP, n, n, "A = LUP (Partial)");
     //Release resources

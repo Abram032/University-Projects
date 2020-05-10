@@ -13,7 +13,7 @@ void PrintMatrix(double** matrix, int n, int m, std::string name = "")
     {
         for(int j = 0; j < m; j++)
         {
-            printf("%.8f ", matrix[i][j]);
+            printf("%.8e ", matrix[i][j]);
         }
         printf("\n");
     }
@@ -25,7 +25,7 @@ void PrintMatrix(double* matrix, int n, std::string name = "")
     std::cout << name << ":" << std::endl;
     for(int i = 0; i < n; i++)
     {
-        printf("%.8f\n", matrix[i]);
+        printf("%.8e\n", matrix[i]);
     }
     printf("\n");
 }
@@ -179,7 +179,7 @@ int main()
         }
     }
 
-    P = Transpose(P, n);
+    //P = Transpose(P, n);
 
     //Forward substitution
     for(int i = 0; i < n; i++)

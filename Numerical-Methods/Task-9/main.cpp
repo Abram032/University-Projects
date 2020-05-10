@@ -22,6 +22,20 @@ double** CreateMatrix(int n)
     return matrix;
 }
 
+double** CreateMatrix(int n, int m)
+{
+    double** matrix = new double* [n];
+    for(int i = 0; i < n; i++) {
+        matrix[i] = new double[m];
+    }
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < m; j++) {
+            matrix[i][j] = 0;
+        }
+    }
+    return matrix;
+}
+
 double* CreateArray(int n)
 {
     double* array = new double[n];
@@ -98,7 +112,7 @@ void PrintMatrix(double** matrix, int n, int m, std::string name = "")
     {
         for(int j = 0; j < m; j++)
         {
-            printf("%.8e ", matrix[i][j]);
+            printf("%.4f ", matrix[i][j]);
         }
         printf("\n");
     }
@@ -129,6 +143,112 @@ double** Multiply(double** matrix1, double** matrix2, int n)
     return result;
 }
 
+double* Multiply(double** matrix1, double* matrix2, int n)
+{
+    double* result = CreateArray(n);
+
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < n; j++) {
+            for(int k = 0; k < n; k++) {
+                result[i] += matrix1[i][k] * matrix2[k];
+            }
+        }
+    }
+    return result;
+}
+
+double* Multiply(double** matrix1, int n, int m, double* matrix2)
+{
+    double* result = CreateArray(n);
+
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < m; j++) {
+            result[i] += matrix1[i][j] * matrix2[j];
+        }   
+    }
+        
+    return result;
+}
+
+double** Multiply(double** matrix1, int n1, int m1, double** matrix2, int n2, int m2)
+{
+    double** result = CreateMatrix(n1, m2);
+
+    for(int i = 0; i < n1; ++i)
+    {
+        for(int j = 0; j < m2; ++j)
+        {
+            for(int k = 0; k < m1; ++k)
+            {
+                result[i][j] += matrix1[i][k] * matrix2[k][j];
+            }
+        }   
+    }
+        
+    return result;
+}
+
+double** Multiply(double** matrix, int n, int m, double scalar)
+{
+    double** result = CreateMatrix(n,m);
+
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < n; j++) {
+            result[i][j] = matrix[i][j] * scalar;
+        }
+    }
+
+    return result;
+}
+
+double** Subtract(double** matrix1, double** matrix2, int n, int m) 
+{
+    double** result = CreateMatrix(n,m);
+
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < n; j++) {
+            double value = matrix1[i][j] - matrix2[i][j];
+            result[i][j] = value;
+        }
+    }
+
+    return result;
+}
+
+bool Equals(double a, double b)
+{
+    return (abs(a) - abs(b)) < __DBL_EPSILON__;
+}
+
+bool Equals(double** matrix1, double** matrix2, int n, int m)
+{
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < n; j++) {
+            if(Equals(matrix1[i][j], matrix2[i][j]) == false) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+void Clear(double** matrix, int n, int m)
+{
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < n; j++) {
+            matrix[i][j] = 0;
+        }
+    }
+}
+
+void Clear(double* array, int n)
+{
+    for(int i = 0; i < n; i++)
+    {
+        array[i] = 0;
+    }
+}
+
 void SwapRow(double** matrix, int row1, int row2, int n) 
 {   
     for(int i = 0; i < n; i++)
@@ -149,6 +269,8 @@ void SwapColumn(double** matrix, int col1, int col2, int n)
     }
 }
 
+
+
 #pragma endregion
 
 #pragma region Array/Matrix Math Functions
@@ -160,6 +282,18 @@ double** Transpose(double** matrix, int n)
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             result[i][j] = matrix[j][i];
+        }  
+    }
+    return result;
+}
+
+double** Transpose(double** matrix, int n, int m)
+{
+    double** result = CreateMatrix(m, n);
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            result[j][i] = matrix[i][j];
         }  
     }
     return result;
@@ -377,182 +511,151 @@ double ArrayInfForm(int n, double* array)
     return FindMax(n, array);
 }
 
+double VectorLength(double** vector, int n) {
+    double sum = 0;
+    for(int i = 0; i < n; i++) {
+        sum += pow(vector[i][0], 2);
+    }
+    return sqrt(sum);
+}
+
+double** NormalizeVector(double** vector, int n) {
+    double len = VectorLength(vector, n);
+    double** result = CreateMatrix(n, 1);
+
+    for(int i = 0; i < n; i++) {
+        result[i][0] = vector[i][0] / len;
+    }
+
+    return result;
+}
+
 #pragma endregion
+
+int sign(double value) {
+    if(value > 0) {
+        return 1;
+    } else if(value < 0) {
+        return -1;
+    } else {
+        return 0;
+    }
+}
 
 int main()
 {
     int n;
-    std::cout << "Enter n of the matrix: ";
-    std::cin >> n;
+    // std::cout << "Enter n: ";
+    // std::cin >> n;
 
     //? Testing
-    n = 5;
+    n = 4;
 
-    //Creating matrixes
-    double** L = CreateMatrix(n);
-    double** U = CreateMatrix(n);
-    double** P = CreateMatrix(n);
-    double* y = CreateArray(n);
-    double* x = CreateArray(n);
-    double* x_prim = CreateArray(n);
+    double** A = CreateMatrix(n, n);
+    double** I = CreateMatrix(n, n);
+    double** lambda = CreateMatrix(n, 1);
 
-    //? Testing
-    double** A = new double*[n];
-    A[0] = new double[5] {2.1000000000e+01, 0.0000000000e+00, 7.7000000000e+02, 0.0000000000e+00, 5.0666000000e+04};
-    A[1] = new double[5] {0.0000000000e+00, 7.7000000000e+02, 0.0000000000e+00, 5.0666000000e+04, 0.0000000000e+00};  
-    A[2] = new double[5] {7.7000000000e+02, 0.0000000000e+00, 5.0666000000e+04, 0.0000000000e+00, 3.9568100000e+06};  
-    A[3] = new double[5] {0.0000000000e+00, 5.0666000000e+04, 0.0000000000e+00, 3.9568100000e+06, 0.0000000000e+00}; 
-    A[4] = new double[5] {5.0666000000e+04, 0.0000000000e+00, 3.9568100000e+06, 0.0000000000e+00, 3.3546266600e+08};
+    //?Testing
+    A[0] = new double[4] {2, 13, -14, 3};
+    A[1] = new double[4] {-2, 25, -22, 4};  
+    A[2] = new double[4] {-3, 31, -27, 5};
+    A[2] = new double[4] {-2, 34, -32, 7};
+    //A[0] = new double[3] {1,1,1};
+    //A[1] = new double[3] {2,-2,2};
+    //A[2] = new double[3] {3,3,-3};
+
+   // lambda[0] = 2.76300328661375;
+   // lambda[1] = -1.723685894982085;
+    //lambda[2] = -5.03931739163167;
+    lambda[0][0] = 3;
+    lambda[1][0] = 2;
+    lambda[2][0] = 1;
+    lambda[3][0] = 1;
+
+    for(int i = 0; i < n; i++) {
+        I[i][i] = 1;
+    }
+
+    PrintMatrix(A, n, n, "A");
+    PrintMatrix(I, n, n, "I");
 
     // double** A = InsertMatrix(n, "A");
     // std::cout << "Inserted matrix:" << std::endl;
-    PrintMatrix(A, n, n, "A");
+    PrintMatrix(lambda, n, 1, "lambda");  
 
-    //? Testing
-    double* B = new double[5] {1.5278900000e+05, 1.0210200000e+05, 1.1921866000e+07, 7.9642860000e+06, 1.0103954740e+09};
-    
-    //double* B = InsertArray(n, "B");
-    //std::cout << "Inserted matrix:" << std::endl;
-    PrintMatrix(B, n, "B");
+    for(int i = 0; i < n; i++)
+    {
+        printf("============> i = %d <============\n\n", i);
+        //Calculating λ * I
+        double** I_lambda = Multiply(I, n, n, lambda[i][0]);
+        //Subtracting A - Iλ
+        double** A_lambda = Subtract(A, I_lambda, n, n);
 
-    //Initial setup for L and P
-    for(int i = 0; i < n; i++) {
-        L[i][i] = 1;
-        P[i][i] = 1;
+        PrintMatrix(I_lambda, n, n, "I_lambda");
+        PrintMatrix(A_lambda, n, n, "A_lambda");
+
+        double** L = CreateMatrix(n, n);
+        double** U = CreateMatrix(n, n);
+        double** P = CreateMatrix(n, n);
+        
+        //? Setting up L and P
+        for(int j = 0; j < n; j++)
+        {
+            L[j][j] = 1;
+            P[j][j] = 1;
+        }
+
+        DooLittleDecomposition(n, A_lambda, L, U, P);
+
+        PrintMatrix(L, n, n, "L");
+        PrintMatrix(U, n, n, "U");
+        PrintMatrix(P, n, n, "P");
+
+        //Solving Ux'_i = 0
+        double** x_prim = CreateMatrix(n, 1);
+        //Setting last value to 1
+        x_prim[n-1][0] = 1;
+
+        for(int j = n - 2; j >= 0; j--)
+        {
+            double sum = 0;
+            for(int k = j + 1; k < n; k++)
+            {
+                sum += U[j][k]*x_prim[k][0];
+            }
+            x_prim[j][0] = (0 - sum)/U[j][j];
+        }
+        
+        //Getting final vector
+        PrintMatrix(x_prim, n, 1, "x_prim_i");
+        //double** P_Tr = Transpose(P, n, n);
+        double** x = Multiply(P, n, n, x_prim, n, 1);
+        PrintMatrix(x, n, 1, "x_i");
+        //Normalization
+        double** x_norm = NormalizeVector(x, n);
+        PrintMatrix(x_norm, n, 1, "x_norm");
+
+        //A*xi
+        double** A_xi = Multiply(A, n, n, x, n, 1);
+        PrintMatrix(A_xi, n, 1, "A_xi");
+        //λ*xi
+        double** lambda_xi = Multiply(lambda, n, 1, x, n, 1);
+        PrintMatrix(lambda_xi, n, 1, "lambda_xi");
+
+        Dispose(n, A_lambda);
+        Dispose(n, I_lambda);
+        Dispose(n, L);
+        Dispose(n, U);
+        Dispose(n, P);
+        Dispose(n, x_prim);
+        Dispose(n, x);
+        Dispose(n, x_norm);
+        Dispose(n, A_xi);
+        Dispose(n, lambda_xi);
     }
 
-    //! Matrix scaling
-    double** A_scaled = CopyMatrix(n, A);
-    double* B_scaled = CopyArray(n, B);
-    double** L_scaled = CopyMatrix(n, L);
-    double** U_scaled = CopyMatrix(n, U);
-    double** P_scaled = CopyMatrix(n, P);
-    double* y_scaled = CreateArray(n);
-    double* x_scaled = CreateArray(n);
-    double* x_scaled_prim = CreateArray(n);
-
-    ScaleMatrix(n, A_scaled, B_scaled);
-
-    PrintMatrix(A_scaled, n, n, "A_scaled");
-    PrintMatrix(B_scaled, n, "B_scaled");
-
-    //!Original matrix
-
-    DooLittleDecomposition(n, A, L, U, P);
-
-    P = Transpose(P, n);
-    A = Multiply(A, P, n);
-
-    SolveLinearEquation(n, L, U, P, B, y, x, x_prim);
-
-    double** L_inv = InverseL(n, L);
-    double** U_inv = InverseU(n, U);
-    double** P_inv = Transpose(P, n);
-    double** PU_inv = Multiply(P_inv, U_inv, n);
-    double** A_inv = Multiply(PU_inv, L_inv, n);
-    double** AA_inv = Multiply(A, A_inv, n);
-
-    //Matrix cond by definition
-    double A_1Form = Matrix1Form(n, A);
-    double A_infForm = MatrixInfForm(n, A);
-    double A_inv_1Form = Matrix1Form(n, A_inv);
-    double A_inv_infForm = MatrixInfForm(n, A_inv);
-    //Matrix cond by estimation
-    double x_1Form = Array1Form(n, x);
-    double B_1Form = Array1Form(n, B);
-    double x_infForm = ArrayInfForm(n, x);
-    double B_infForm = ArrayInfForm(n, B);
-
-    PrintMatrix(A_inv, n, n, "A^(-1)");
-    PrintMatrix(AA_inv, n, n, "A*A^(-1)");
-    PrintMatrix(L, n, n, "L");
-    PrintMatrix(L_inv, n, n, "L^(-1)");
-    PrintMatrix(U, n, n, "U");
-    PrintMatrix(U_inv, n, n, "U^(-1)");
-    PrintMatrix(P, n, n, "P^T");
-    PrintMatrix(y, n, "y");
-    PrintMatrix(x_prim, n, "x\'");
-    PrintMatrix(x, n, "x");
-    // printf("A 1-Form: %.8f\n", A_1Form);
-    // printf("A^(-1) 1-Form: %.8f\n", A_inv_1Form);
-    // printf("A Inf-Form: %.8f\n", A_infForm);
-    // printf("A^(-1) Inf-Form: %.8f\n", A_inv_infForm);
-    printf("cond(A) (1): %.8e\n", A_1Form * A_inv_1Form);
-    printf("cond(A) (Inf): %.8e\n", A_infForm * A_inv_infForm);
-    printf("Estimated cond(A) (1): %.8e\n", (A_1Form * x_1Form) / B_1Form);
-    printf("Estimated cond(A) (Inf): %.8e\n", (A_infForm * x_infForm) / B_infForm);
-
-    printf("\n\n");
-    //!Scaled matrix
-
-    DooLittleDecomposition(n, A_scaled, L_scaled, U_scaled, P_scaled);
-
-    P = Transpose(P_scaled, n);
-    A_scaled = Multiply(A_scaled, P_scaled, n);
-
-    SolveLinearEquation(n, L_scaled, U_scaled, P_scaled, B_scaled, y_scaled, x_scaled, x_scaled_prim);
-
-    double** L_scaled_inv = InverseL(n, L_scaled);
-    double** U_scaled_inv = InverseU(n, U_scaled);
-    double** P_scaled_inv = Transpose(P_scaled, n);
-    double** PU_scaled_inv = Multiply(P_scaled_inv, U_scaled_inv, n);
-    double** A_scaled_inv = Multiply(PU_scaled_inv, L_scaled_inv, n);
-    double** AA_scaled_inv = Multiply(A_scaled, A_scaled_inv, n);
-
-    //Matrix cond by definition
-    double A_scaled_1Form = Matrix1Form(n, A_scaled);
-    double A_scaled_infForm = MatrixInfForm(n, A_scaled);
-    double A_scaled_inv_1Form = Matrix1Form(n, A_scaled_inv);
-    double A_scaled_inv_infForm = MatrixInfForm(n, A_scaled_inv);
-
-    //Matrix cond by estimation
-    double x_scaled_1Form = Array1Form(n, x_scaled);
-    double B_scaled_1Form = Array1Form(n, B_scaled);
-    double x_scaled_infForm = ArrayInfForm(n, x_scaled);
-    double B_scaled_infForm = ArrayInfForm(n, B_scaled);
-
-    PrintMatrix(A_scaled_inv, n, n, "A^(-1) (Scaled)");
-    PrintMatrix(AA_scaled_inv, n, n, "A*A^(-1) (Scaled)");
-    PrintMatrix(L_scaled, n, n, "L (Scaled)");
-    PrintMatrix(L_scaled_inv, n, n, "L^(-1) (Scaled)");
-    PrintMatrix(U_scaled, n, n, "U (Scaled)");
-    PrintMatrix(U_scaled_inv, n, n, "U^(-1) (Scaled)");
-    PrintMatrix(P_scaled, n, n, "P^T (Scaled)");
-    PrintMatrix(y_scaled, n, "y (Scaled)");
-    PrintMatrix(x_scaled_prim, n, "x\' (Scaled)");
-    PrintMatrix(x_scaled, n, "x (Scaled)");
-    // printf("A (Scaled) 1-Form: %.8f\n", A_scaled_1Form);
-    // printf("A^(-1) (Scaled) 1-Form: %.8f\n", A_scaled_inv_1Form);
-    // printf("A (Scaled) Inf-Form: %.8f\n", A_scaled_infForm);
-    // printf("A^(-1) (Scaled) Inf-Form: %.8f\n", A_scaled_inv_infForm);
-    printf("cond(A (Scaled)) (1): %.8e\n", A_scaled_1Form * A_scaled_inv_1Form);
-    printf("cond(A (Scaled)) (Inf): %.8e\n", A_scaled_infForm * A_scaled_inv_infForm);
-    printf("Estimated cond(A (Scaled)) (1): %.8e\n", (A_scaled_1Form * x_scaled_1Form) / B_scaled_1Form);
-    printf("Estimated cond(A (Scaled)) (Inf): %.8e\n", (A_scaled_infForm * x_scaled_infForm) / B_scaled_infForm);
-
-    //!Structures disposal
-
     Dispose(n, A);
-    Dispose(n, L);
-    Dispose(n, L_inv);
-    Dispose(n, U);
-    Dispose(n, U_inv);
-    Dispose(n, P);
-    Dispose(B);
-    Dispose(x);
-    Dispose(x_prim);
-    Dispose(y);
-
-    Dispose(n, A_scaled);
-    Dispose(n, L_scaled);
-    Dispose(n, L_scaled_inv);
-    Dispose(n, U_scaled);
-    Dispose(n, U_scaled_inv);
-    Dispose(n, P_scaled);
-    Dispose(B_scaled);
-    Dispose(x_scaled);
-    Dispose(x_scaled_prim);
-    Dispose(y_scaled);
+    Dispose(n, lambda);
 
     return 0;
 }
