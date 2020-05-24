@@ -33,6 +33,14 @@ namespace OM.Models
     {
         None,
         Red,
-        Blue
+        Blue,
+        Orange,
+        Yellow,
+        Green,
+        Pink,
+        Purple,
+        Brown,
+        Black,
+        White
     }
 }

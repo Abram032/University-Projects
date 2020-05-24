@@ -70,35 +70,46 @@ namespace OM.Console
                 return;
             }
 
-            //! Euler Cycle
-            var ec = new EulerCycle();
-            foreach(var graph in graphs)
-            {
-                var result = ec.Search(graph.Copy());
-                System.Console.WriteLine($"Euler Cycle - {graph.Name}:");
-                System.Console.WriteLine($"{result}");
-            }
+            ////! Euler Cycle
+            //var ec = new EulerCycle();
+            //foreach(var graph in graphs)
+            //{
+            //    var result = ec.Search(graph.Copy());
+            //    System.Console.WriteLine($"Euler Cycle - {graph.Name}:");
+            //    System.Console.WriteLine($"{result}");
+            //}
+
+            //System.Console.WriteLine();
+
+            ////! Maximal Matching
+            //var bfs = new BFS();
+            //var maxmatch = new MaximalMatching();
+            //foreach(var graph in graphs)
+            //{
+            //    var result = maxmatch.Search(graph.Copy());
+            //    System.Console.WriteLine($"Maximal Matching - {graph.Name}:");
+            //    System.Console.WriteLine($"{result}");
+            //}
+
+            //System.Console.WriteLine();
+
+            ////!Hungarian method
+            //var hungarianMethod = new HungarianMethod();
+            //foreach(var graph in graphs)
+            //{
+            //    var result = hungarianMethod.Resolve(graph.Copy());
+            //    System.Console.WriteLine($"Hungarian Method - {graph.Name}:");
+            //    System.Console.WriteLine($"{result}");
+            //}
 
             System.Console.WriteLine();
 
-            //! Maximal Matching
-            var bfs = new BFS();
-            var maxmatch = new MaximalMatching();
+            //!Graph coloring
+            var graphColoring = new GraphColoring();
             foreach(var graph in graphs)
             {
-                var result = maxmatch.Search(graph.Copy());
-                System.Console.WriteLine($"Maximal Matching - {graph.Name}:");
-                System.Console.WriteLine($"{result}");
-            }
-
-            System.Console.WriteLine();
-
-            //!Hungarian method
-            var hungarianMethod = new HungarianMethod();
-            foreach(var graph in graphs)
-            {
-                var result = hungarianMethod.Resolve(graph.Copy());
-                System.Console.WriteLine($"Hungarian Method - {graph.Name}:");
+                var result = graphColoring.ColorGraph(graph.Copy());
+                System.Console.WriteLine($"Graph Coloring - {graph.Name}");
                 System.Console.WriteLine($"{result}");
             }
         }
