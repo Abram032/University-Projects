@@ -102,14 +102,29 @@ namespace OM.Console
             //    System.Console.WriteLine($"{result}");
             //}
 
+            // System.Console.WriteLine();
+
+            // //!Graph coloring
+            // var graphColoring = new GraphColoring();
+            // foreach(var graph in graphs)
+            // {
+            //     var result = graphColoring.ColorGraph(graph.Copy());
+            //     System.Console.WriteLine($"Graph Coloring - {graph.Name}");
+            //     System.Console.WriteLine($"{result}");
+            // }
+
             System.Console.WriteLine();
 
-            //!Graph coloring
-            var graphColoring = new GraphColoring();
+            //!Ant colony
+            var antColony = new AntColony();
             foreach(var graph in graphs)
             {
-                var result = graphColoring.ColorGraph(graph.Copy());
-                System.Console.WriteLine($"Graph Coloring - {graph.Name}");
+                //Pheromone evaporation factor
+                float rho = 0.5F;
+                int turns = 100;
+
+                System.Console.WriteLine($"Ant Colony - {graph.Name}");
+                var result = antColony.Search(graph.Copy(), rho, turns);
                 System.Console.WriteLine($"{result}");
             }
         }
