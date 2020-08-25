@@ -10,9 +10,32 @@ namespace AOOP.Sorting.Algorithms
 {
     public class BubbleSort<T> : ISorter<T> where T : IComparable<T>
     {
+        public IList<T> Values { get; set; }
+        public State State { get; set; }
+
+        public BubbleSort() { State = State.Created; }
+        public BubbleSort(IList<T> values)     
+        {
+            State = State.Created;
+            Values = values;
+        }
+
+        public void Sort() 
+        {
+            Values = Sort(Values);          
+        }
+
+        public void Sort(object values) 
+        {
+            Values = values as IList<T>;
+            Sort();
+        }
+
         public IList<T> Sort(IList<T> values)
         {
-            for(int i = 0; i < values.Count - 1; i++) 
+            State = State.Running;
+
+            for (int i = 0; i < values.Count - 1; i++) 
             {
                 var isChanged = false;
                 for(int j = 0; j < values.Count - i - 1; j++)
@@ -31,7 +54,9 @@ namespace AOOP.Sorting.Algorithms
                     break;
                 }
             }
-            
+
+            State = State.Finished;
+
             return values;
         }
     }

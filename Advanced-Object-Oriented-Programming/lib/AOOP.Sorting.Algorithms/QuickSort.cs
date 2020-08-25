@@ -10,11 +10,32 @@ namespace AOOP.Sorting.Algorithms
 {
     public class QuickSort<T> : ISorter<T> where T : IComparable<T>
     {
-        public IList<T> Sort(IList<T> values)
+        public IList<T> Values { get; set; }
+        public State State { get; set; }
+        public QuickSort() { State = State.Created; }
+        public QuickSort(IList<T> values) 
         {
+            State = State.Created;
+            Values = values;
+        }
+
+        public void Sort()  
+        {
+            Values = Sort(Values);
+        }
+
+        public void Sort(object values) 
+        {
+            Values = values as IList<T>;
+            Sort();
+        }
+
+        public IList<T> Sort(IList<T> values) 
+        {
+            State = State.Running;
             QSort(values, 0, values.Count - 1);
-            
-            return values;
+            State = State.Finished;
+            return Values;
         }
 
         private void QSort(IList<T> array, int low, int high)

@@ -4,6 +4,7 @@ using AOOP.Sorting.Models;
 using AOOP.Sorting.Abstractions;
 using System.Diagnostics;
 using System.Threading;
+using System.Text;
 
 namespace AOOP.Sorting.Utils
 {
@@ -43,6 +44,45 @@ namespace AOOP.Sorting.Utils
             };
 
             return result;
+        }
+
+        public IList<Thread> StartThreads(IEnumerable<ISorter<T>> algorithms) 
+        {        
+            var threads = new List<Thread>();
+
+            foreach(var algorithm in algorithms) 
+            {
+                var thread = new Thread(algorithm.Sort);
+                thread.Name = algorithm.GetType().Name;
+                thread.Start(algorithm.Values);
+                threads.Add(thread);
+            }
+
+            return threads;
+        }
+
+        public void StopThreads(IEnumerable<Thread> threads) 
+        {
+            foreach(var thread in threads) 
+            {
+                thread.Suspend();
+            }
+        }
+
+        public void ResumeThrads(IEnumerable<Thread> threads) 
+        {
+            foreach(var thread in threads) 
+            {
+                thread.Resume();
+            }
+        }
+
+        public void JoinThreads(IEnumerable<Thread> threads) 
+        {
+            foreach(var thread in threads) 
+            {
+                thread.Join();
+            }
         }
     }
 }

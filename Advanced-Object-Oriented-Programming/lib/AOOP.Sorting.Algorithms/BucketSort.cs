@@ -13,27 +13,49 @@ namespace AOOP.Sorting.Algorithms
     public class BucketSort<T> : ISorter<T>, IBucketSort<T> where T : IComparable<T>, IConvertible
     {
         #region AllowedTypes
-        private static readonly Type[] allowedTypes = 
+        private static readonly Type[] allowedTypes =
             {
                 typeof(Byte),
-                typeof(Int16), 
-                typeof(Int32), 
+                typeof(Int16),
+                typeof(Int32),
                 typeof(Int64),
                 typeof(SByte),
-                typeof(UInt16), 
-                typeof(UInt32), 
+                typeof(UInt16),
+                typeof(UInt32),
                 typeof(UInt64),
                 typeof(Char)
             };
         #endregion
+        public IList<T> Values { get; set; }
+        public State State { get; set; }
 
-        public IList<T> Sort(IList<T> values)
+        public BucketSort() { State = State.Created; }
+        public BucketSort(IList<T> values) 
+        {
+            State = State.Created;
+            Values = values;
+        }
+
+        public void Sort() 
+        {
+            Values = Sort(Values, new QuickSort<T>());
+        }
+
+        public void Sort(object values) 
+        {
+            Values = values as IList<T>;
+            Sort();
+        }
+
+        public IList<T> Sort(IList<T> values) 
         {
             return Sort(values, new QuickSort<T>());
         }
 
         public IList<T> Sort(IList<T> values, ISorter<T> algorithm)
         {
+            State = State.Running;
+
             if(!allowedTypes.Contains(typeof(T)))
             {
                 throw new TypeNotAllowedException($"Type of {typeof(T)} is not allowed in this method.");
@@ -77,6 +99,8 @@ namespace AOOP.Sorting.Algorithms
                     values[ai] = buckets[i][j];
                 }
             }
+
+            State = State.Finished;
 
             return values;
         }

@@ -27,8 +27,31 @@ namespace AOOP.Sorting.Algorithms
             };
         #endregion
 
-        public IList<T> Sort(IList<T> values)
+        public IList<T> Values { get; set; }
+        public State State { get; set; }
+
+        public CountingSort() { State = State.Created; }
+        public CountingSort(IList<T> values) 
         {
+            State = State.Created;
+            Values = values;
+        }
+
+        public void Sort()
+        {
+            Values = Sort(Values);
+        }
+
+        public void Sort(object values) 
+        {
+            Values = values as IList<T>;
+            Sort();
+        }
+
+        public IList<T> Sort(IList<T> values) 
+        {
+            State = State.Running;
+
             if(!allowedTypes.Contains(typeof(T)))
             {
                 throw new TypeNotAllowedException($"Type of {typeof(T)} is not allowed in this method.");
@@ -59,6 +82,8 @@ namespace AOOP.Sorting.Algorithms
                     values[ai] = (T)Convert.ChangeType(i + Convert.ToInt64(minValue), typeof(T));
                 }
             }
+
+            State = State.Finished;
 
             return values;
         }

@@ -12,30 +12,56 @@ namespace AOOP.Sorting.Algorithms
 {
     public class MergeSort<T> : ISorter<T> where T : IComparable<T>
     {
-        public IList<T> Sort(IList<T> array)
+        public IList<T> Values { get; set; }
+        public State State { get; set; }
+        public MergeSort() { State = State.Created; }
+        public MergeSort(IList<T> values) 
         {
-            if (array.Count <= 1) 
+            State = State.Created;
+            Values = values;
+        }
+
+        public void Sort()  
+        {
+            Values = Sort(Values);
+        }
+
+        public void Sort(object values) 
+        {
+            Values = values as IList<T>;
+            Sort();
+        }
+
+        public IList<T> Sort(IList<T> values) 
+        {
+            State = State.Running;
+
+            if (values.Count <= 1) 
             {
-                return array;
+                return values;
             }
 
-            int middle = array.Count / 2;
+            int middle = values.Count / 2;
 
             IList<T> leftArray = new List<T>();
             IList<T> rightArray = new List<T>();
 
             for (int i = 0; i < middle; i++)
             {
-                leftArray.Add(array[i]);
+                leftArray.Add(values[i]);
             }
-            for (int i = middle; i < array.Count; i++)
+            for (int i = middle; i < values.Count; i++)
             {
-                rightArray.Add(array[i]);
+                rightArray.Add(values[i]);
             }
 
             leftArray = Sort(leftArray);
             rightArray = Sort(rightArray);
-            return Merge(leftArray, rightArray);
+            values = Merge(leftArray, rightArray);
+
+            State = State.Finished;
+
+            return values;
         }
 
         private IList<T> Merge(IList<T> leftArray, IList<T> rightArray)

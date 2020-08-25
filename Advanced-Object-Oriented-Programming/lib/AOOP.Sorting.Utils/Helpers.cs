@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
+using AOOP.Sorting.Abstractions;
 using AOOP.Sorting.Models;
 
 namespace AOOP.Sorting.Utils
@@ -13,6 +15,19 @@ namespace AOOP.Sorting.Utils
                 Console.Write($"{value} ");
             }
             Console.WriteLine();
+        }
+
+        public static void Print<T>(IEnumerable<ISorter<T>> algorithms) where T : IComparable<T> 
+        {
+            var sb = new StringBuilder();
+            foreach(var algorithm in algorithms) 
+            {
+                foreach (var value in algorithm.Values) {
+                    sb.Append($"{value},");
+                }
+                Console.WriteLine($"{algorithm.GetType().Name}: {sb.ToString()}");
+                sb.Clear();
+            }
         }
 
         public static void PrintResult<T>(Result<T> result)
