@@ -29,13 +29,12 @@ namespace AOOP.FrameworkConsole
                 new QuickSort<int>()
             };
 
-            var analyzer = new PerformanceAnalyzer<int>();
-            var threads = analyzer.StartThreads(algorithms, values, out var results);
-            analyzer.StopThreads(threads);
-            //Helpers.PrintResultValues(results);
-            analyzer.ResumeThrads(threads);
-            analyzer.JoinThreads(threads);
-            //Helpers.PrintResultValues(results);
+            var comparer = new AlgorithmComparer<int>();
+            comparer.PrepareThreads(algorithms, values);
+            Helpers.PrintResultValues(comparer.Results);
+            comparer.Start();
+            comparer.Join();
+            Helpers.PrintResultValues(comparer.Results);
         }
     }
 }

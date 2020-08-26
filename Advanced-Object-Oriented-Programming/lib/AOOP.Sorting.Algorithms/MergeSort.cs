@@ -14,7 +14,8 @@ namespace AOOP.Sorting.Algorithms
     {
         public void Sort(object values) 
         {
-            Sort(values as IList<T>);
+            var _values = Sort(values as IList<T>);
+            _values.CopyTo(values as T[], 0);
         }
 
         public IList<T> Sort(IList<T> values) 
@@ -44,8 +45,7 @@ namespace AOOP.Sorting.Algorithms
 
             leftArray = Sort(leftArray);
             rightArray = Sort(rightArray);
-            values = Merge(leftArray, rightArray);
-            return values;
+            return Merge(leftArray, rightArray);
         }
 
         private IList<T> Merge(IList<T> leftArray, IList<T> rightArray)
