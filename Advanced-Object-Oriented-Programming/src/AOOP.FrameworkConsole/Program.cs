@@ -22,11 +22,11 @@ namespace AOOP.FrameworkConsole
             var algorithms = new List<ISorter<int>>
             {
                 new BubbleSort<int>(),
-                //new BucketSort<int>(),
-                //new CountingSort<int>(),
-                //new InsertionSort<int>(),
-                //new MergeSort<int>(),
-                //new QuickSort<int>()
+                new BucketSort<int>(),
+                new CountingSort<int>(),
+                new InsertionSort<int>(),
+                new MergeSort<int>(),
+                new QuickSort<int>()
             };
 
             var analyzer = new PerformanceAnalyzer<int>();
@@ -36,10 +36,6 @@ namespace AOOP.FrameworkConsole
             analyzer.ResumeThrads(threads);
             analyzer.JoinThreads(threads);
             //Helpers.PrintResultValues(results);
-
-            var mgs = new MergeSort<int>();
-            var result = mgs.Sort(values.Clone() as IList<int>);
-            Helpers.Print(result);
         }
     }
 }

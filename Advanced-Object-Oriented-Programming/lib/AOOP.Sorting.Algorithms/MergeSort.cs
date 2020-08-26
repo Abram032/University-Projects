@@ -45,7 +45,6 @@ namespace AOOP.Sorting.Algorithms
             leftArray = Sort(leftArray);
             rightArray = Sort(rightArray);
             values = Merge(leftArray, rightArray);
-
             return values;
         }
 
