@@ -61,6 +61,11 @@ namespace AOOP.Sorting.Utils
 
         public static bool Validate<T>(IList<T> values) where T : IComparable<T>
         {
+            if(values == null)
+            {
+                throw new ArgumentNullException();
+            }
+
             for(int i = 1; i < values.Count; i++)
             {
                 if(values[i-1].CompareTo(values[i]) > 0)

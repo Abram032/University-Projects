@@ -10,6 +10,11 @@ Advanced-Object-Oriented-Programming/lib/AOOP.Sorting.Models/bin/*
 Advanced-Object-Oriented-Programming/lib/AOOP.Sorting.Models/obj/*
 Advanced-Object-Oriented-Programming/src/AOOP.FrameworkConsole/bin/*
 Advanced-Object-Oriented-Programming/src/AOOP.FrameworkConsole/obj/*
+Advanced-Object-Oriented-Programming/tests/AOOP.UnitTests/bin/*
+Advanced-Object-Oriented-Programming/tests/AOOP.UnitTests/obj/*
+Advanced-Object-Oriented-Programming/packages/*
+Advanced-Object-Oriented-Programming/.vs/*
+Advanced-Object-Oriented-Programming/.vscode/*
 
 Parallel-Programming/Task-1/out.*
 Parallel-Programming/Task-1/out
