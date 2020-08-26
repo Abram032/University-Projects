@@ -10,31 +10,18 @@ namespace AOOP.Sorting.Algorithms
 {
     public class InsertionSort<T> : ISorter<T> where T : IComparable<T>
     {
-        public IList<T> Values { get; set; }
-        public State State { get; set; }
-        public InsertionSort() { State = State.Created; }
-        public InsertionSort(IList<T> values) 
-        {
-            State = State.Created;
-            Values = values;
-        }
-
-        public void Sort()
-        {
-            Values = Sort(Values);
-        }
-
         public void Sort(object values) 
         {
-            Values = values as IList<T>;
-            Sort();
+            Sort(values as IList<T>);
         }
 
         public IList<T> Sort(IList<T> values) 
         {
-            State = State.Running;
+            if (values == null) {
+                return default;
+            }
 
-            for(int i = 1; i < values.Count; i++) 
+            for (int i = 1; i < values.Count; i++) 
             {
                 var value = values[i];
                 int j = i - 1;
@@ -46,8 +33,6 @@ namespace AOOP.Sorting.Algorithms
                 }
                 values[j + 1] = value;
             }
-
-            State = State.Finished;
 
             return values;
         }

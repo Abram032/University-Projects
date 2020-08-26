@@ -17,17 +17,21 @@ namespace AOOP.Sorting.Utils
             Console.WriteLine();
         }
 
-        public static void Print<T>(IEnumerable<ISorter<T>> algorithms) where T : IComparable<T> 
+        public static void PrintResultValues<T>(IEnumerable<Result<T>> results) 
+        {    
+            foreach(var result in results) 
+            {
+                PrintResultValues(result);
+            }
+        }
+
+        public static void PrintResultValues<T>(Result<T> result) 
         {
             var sb = new StringBuilder();
-            foreach(var algorithm in algorithms) 
-            {
-                foreach (var value in algorithm.Values) {
-                    sb.Append($"{value},");
-                }
-                Console.WriteLine($"{algorithm.GetType().Name}: {sb.ToString()}");
-                sb.Clear();
+            foreach (var value in result.Values) {
+                sb.Append($"{value},");
             }
+            Console.WriteLine($"{result.Algorithm}: {sb.ToString()}");
         }
 
         public static void PrintResult<T>(Result<T> result)

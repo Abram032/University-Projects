@@ -46,16 +46,27 @@ namespace AOOP.Sorting.Utils
             return result;
         }
 
-        public IList<Thread> StartThreads(IEnumerable<ISorter<T>> algorithms) 
+        public IList<Thread> StartThreads(IEnumerable<ISorter<T>> algorithms, IList<T> values, out IList<Result<T>> results) 
         {        
+            results = new List<Result<T>>();
+            var array = values as T[];
             var threads = new List<Thread>();
 
             foreach(var algorithm in algorithms) 
             {
+                var result = new Result<T> 
+                {
+                    Algorithm = algorithm.GetType().Name,
+                    Values = array.Clone() as IList<T>
+                };
+
                 var thread = new Thread(algorithm.Sort);
-                thread.Name = algorithm.GetType().Name;
-                thread.Start(algorithm.Values);
+                thread.Name = result.Algorithm;
+
+                results.Add(result);
                 threads.Add(thread);
+
+                thread.Start(result.Values);
             }
 
             return threads;
@@ -65,7 +76,10 @@ namespace AOOP.Sorting.Utils
         {
             foreach(var thread in threads) 
             {
-                thread.Suspend();
+                if(thread.ThreadState == System.Threading.ThreadState.Running) 
+                {
+                    thread.Suspend();
+                }
             }
         }
 
@@ -73,7 +87,10 @@ namespace AOOP.Sorting.Utils
         {
             foreach(var thread in threads) 
             {
-                thread.Resume();
+                if (thread.ThreadState == System.Threading.ThreadState.Suspended) 
+                {
+                    thread.Resume();
+                }
             }
         }
 

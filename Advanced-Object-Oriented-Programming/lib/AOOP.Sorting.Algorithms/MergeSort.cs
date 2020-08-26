@@ -12,29 +12,16 @@ namespace AOOP.Sorting.Algorithms
 {
     public class MergeSort<T> : ISorter<T> where T : IComparable<T>
     {
-        public IList<T> Values { get; set; }
-        public State State { get; set; }
-        public MergeSort() { State = State.Created; }
-        public MergeSort(IList<T> values) 
-        {
-            State = State.Created;
-            Values = values;
-        }
-
-        public void Sort()  
-        {
-            Values = Sort(Values);
-        }
-
         public void Sort(object values) 
         {
-            Values = values as IList<T>;
-            Sort();
+            Sort(values as IList<T>);
         }
 
         public IList<T> Sort(IList<T> values) 
         {
-            State = State.Running;
+            if (values == null) {
+                return default;
+            }
 
             if (values.Count <= 1) 
             {
@@ -58,8 +45,6 @@ namespace AOOP.Sorting.Algorithms
             leftArray = Sort(leftArray);
             rightArray = Sort(rightArray);
             values = Merge(leftArray, rightArray);
-
-            State = State.Finished;
 
             return values;
         }

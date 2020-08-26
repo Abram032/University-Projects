@@ -1,5 +1,6 @@
 ﻿using AOOP.Sorting.Abstractions;
 using AOOP.Sorting.Algorithms;
+using AOOP.Sorting.Models;
 using AOOP.Sorting.Utils;
 using System;
 using System.Collections.Generic;
@@ -14,36 +15,31 @@ namespace AOOP.FrameworkConsole
     {
         static void Main(string[] args) 
         {
-            var values = Helpers.GenerateArray<int>(0, 250, 1000);
+            var values = Helpers.GenerateArray<int>(0, 250, 100);
 
             System.Console.WriteLine("Starting algorithms...");
 
             var algorithms = new List<ISorter<int>>
             {
-                new BubbleSort<int>(values.Clone() as IList<int>),
-                new BucketSort<int>(values.Clone() as IList<int>),
-                new CountingSort<int>(values.Clone() as IList<int>),
-                new InsertionSort<int>(values.Clone() as IList<int>),
-                new MergeSort<int>(values.Clone() as IList<int>),
-                new QuickSort<int>(values.Clone() as IList<int>)
+                new BubbleSort<int>(),
+                //new BucketSort<int>(),
+                //new CountingSort<int>(),
+                //new InsertionSort<int>(),
+                //new MergeSort<int>(),
+                //new QuickSort<int>()
             };
 
             var analyzer = new PerformanceAnalyzer<int>();
-
-            var threads = analyzer.StartThreads(algorithms);
-            //Helpers.Print(algorithms);
+            var threads = analyzer.StartThreads(algorithms, values, out var results);
             analyzer.StopThreads(threads);
-            Helpers.Print(algorithms);
-            analyzer.ResumeThrads(threads);
-            Thread.Sleep(2);
-            analyzer.StopThreads(threads);
-            Helpers.Print(algorithms);
+            //Helpers.PrintResultValues(results);
             analyzer.ResumeThrads(threads);
             analyzer.JoinThreads(threads);
-            Helpers.Print(algorithms);
+            //Helpers.PrintResultValues(results);
 
-            //var results = analyzer.Measure(algorithms, array);
-            //Helpers.PrintResults<int>(results);
+            var mgs = new MergeSort<int>();
+            var result = mgs.Sort(values.Clone() as IList<int>);
+            Helpers.Print(result);
         }
     }
 }
