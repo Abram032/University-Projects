@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\AOOP.Sorting.Abstractions\AOOP.Sorting.Abstractions.csproj" />
+    <ProjectReference Include="..\AOOP.Sorting.Utils\AOOP.Sorting.Utils.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+</Project>

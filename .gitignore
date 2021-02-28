@@ -1,13 +1,20 @@
-Advanced-Objective-Programming/lib/AOP.Sorting.Algorithms/bin/*
-Advanced-Objective-Programming/lib/AOP.Sorting.Algorithms/obj/*
-Advanced-Objective-Programming/lib/AOP.Sorting.Abstractions/bin/*
-Advanced-Objective-Programming/lib/AOP.Sorting.Abstractions/obj/*
-Advanced-Objective-Programming/src/AOP.Console/bin/*
-Advanced-Objective-Programming/src/AOP.Console/obj/*
-Advanced-Objective-Programming/lib/AOP.Sorting.Utils/bin/*
-Advanced-Objective-Programming/lib/AOP.Sorting.Utils/obj/*
-Advanced-Objective-Programming/lib/AOP.Sorting.Models/bin/*
-Advanced-Objective-Programming/lib/AOP.Sorting.Models/obj/*
+Advanced-Object-Oriented-Programming/lib/AOOP.Sorting.Algorithms/bin/*
+Advanced-Object-Oriented-Programming/lib/AOOP.Sorting.Algorithms/obj/*
+Advanced-Object-Oriented-Programming/lib/AOOP.Sorting.Abstractions/bin/*
+Advanced-Object-Oriented-Programming/lib/AOOP.Sorting.Abstractions/obj/*
+Advanced-Object-Oriented-Programming/src/AOOP.Console/bin/*
+Advanced-Object-Oriented-Programming/src/AOOP.Console/obj/*
+Advanced-Object-Oriented-Programming/lib/AOOP.Sorting.Utils/bin/*
+Advanced-Object-Oriented-Programming/lib/AOOP.Sorting.Utils/obj/*
+Advanced-Object-Oriented-Programming/lib/AOOP.Sorting.Models/bin/*
+Advanced-Object-Oriented-Programming/lib/AOOP.Sorting.Models/obj/*
+Advanced-Object-Oriented-Programming/src/AOOP.FrameworkConsole/bin/*
+Advanced-Object-Oriented-Programming/src/AOOP.FrameworkConsole/obj/*
+Advanced-Object-Oriented-Programming/tests/AOOP.UnitTests/bin/*
+Advanced-Object-Oriented-Programming/tests/AOOP.UnitTests/obj/*
+Advanced-Object-Oriented-Programming/packages/*
+Advanced-Object-Oriented-Programming/.vs/*
+Advanced-Object-Oriented-Programming/.vscode/*
 
 Parallel-Programming/Task-1/out.*
 Parallel-Programming/Task-1/out
@@ -44,3 +51,4 @@ Numerical-Methods/Task-3/main
 Numerical-Methods/Task-7/main
 /Optimization-Methods/.vs/*
 Parallel-Programming/Task-5/out.exe
+Advanced-Object-Oriented-Programming/.vs/AOOP/v16/.suo

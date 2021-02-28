@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\lib",
+    "\\lib\\AOOP.Sorting.Abstractions",
+    "\\lib\\AOOP.Sorting.Algorithms",
+    "\\lib\\AOOP.Sorting.Models",
+    "\\lib\\AOOP.Sorting.Utils",
+    "\\src",
+    "\\src\\AOOP.Console"
+  ],
+  "SelectedNode": "\\AOOP.sln",
+  "PreviewInSolutionExplorer": false
+}
