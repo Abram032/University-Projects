@@ -14,7 +14,7 @@ namespace AOP.Console
     {
         static void Main(string[] args)
         {
-            var array = Helpers.GenerateArray<int>(0, 250, 10000);
+            var array = Helpers.GenerateArray<int>(0, 250, 100);
 
             System.Console.WriteLine("Starting algorithms...");
 
@@ -31,6 +31,10 @@ namespace AOP.Console
             var analyzer = new PerformanceAnalyzer<int>();
             var results = analyzer.Measure(algorithms, array);
             Helpers.PrintResults<int>(results);
+
+            var mgs = new MergeSort<int>();
+            var result = mgs.Sort(array.Clone() as IList<int>);
+            Helpers.Print(result);
         }
     }
 }

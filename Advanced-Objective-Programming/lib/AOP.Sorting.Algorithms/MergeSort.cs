@@ -35,7 +35,8 @@ namespace AOP.Sorting.Algorithms
 
             leftArray = Sort(leftArray);
             rightArray = Sort(rightArray);
-            return Merge(leftArray, rightArray);
+            array = Merge(leftArray, rightArray);
+            return array;
         }
 
         private IList<T> Merge(IList<T> leftArray, IList<T> rightArray)
